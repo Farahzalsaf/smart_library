@@ -9,19 +9,22 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from typing import Optional
 import json
+from config import SECRET_KEY
 
-SECRET_KEY = "afas-smart-library"
+
+secret_key = {SECRET_KEY}
+
 ACCESS_TOKEN_EXPIRE_MINUTES = 10
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="users/login")
 
 def get_password_hash(password: str) -> str:
-    salt = SECRET_KEY.encode() 
+    salt = secret_key.encode() 
     hashed = hashlib.pbkdf2_hmac('sha256', password.encode(), salt, 100000)
     return base64.b64encode(hashed).decode()
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    salt = SECRET_KEY.encode()  
+    salt = secret_key.encode()  
     hashed = hashlib.pbkdf2_hmac('sha256', plain_password.encode(), salt, 100000)
     return hmac.compare_digest(base64.b64encode(hashed).decode(), hashed_password)
 
@@ -33,13 +36,13 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -
         expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     to_encode.update({"exp": expire.timestamp()})
     encoded_jwt = base64.urlsafe_b64encode(json.dumps(to_encode).encode()).decode()
-    signature = hmac.new(SECRET_KEY.encode(), encoded_jwt.encode(), hashlib.sha256).digest()
+    signature = hmac.new(secret_key.encode(), encoded_jwt.encode(), hashlib.sha256).digest()
     return f"{encoded_jwt}.{base64.urlsafe_b64encode(signature).decode()}"
 
 def verify_token(token: str):
     try:
         encoded_jwt, signature = token.rsplit('.', 1)
-        expected_signature = hmac.new(SECRET_KEY.encode(), encoded_jwt.encode(), hashlib.sha256).digest()
+        expected_signature = hmac.new(secret_key.encode(), encoded_jwt.encode(), hashlib.sha256).digest()
         if not hmac.compare_digest(signature.encode(), base64.urlsafe_b64encode(expected_signature)):
             raise Exception("Invalid signature")
         payload = json.loads(base64.urlsafe_b64decode(encoded_jwt.encode()).decode())
