@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 # Fetch database URL from environment variables
-DATABASE_URL = "postgresql://postgres:password@localhost:5432/Bookstore"
+DATABASE_URL = "postgresql://falsafwan002:Passw0rd@localhost:5432/smartlibrary"
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
