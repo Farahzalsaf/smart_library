@@ -2,7 +2,7 @@
 
 ## Overview 
 
-The Smart Library API is a RESTful service designed to manage a bookstore inventory. This API supports key operations for books, authors, users, and personalized book recommendations. It emphasizes robust authentication and authorization mechanisms, clean code practices, proper error handling, and comprehensive documentation.
+The Smart Library API is a RESTful service designed to manage a bookstore inventory. This API supports key operations for books, authors, users, and personalized book recommendations.
 
 ## Key features 
 * Inventory Management: CRUD operations for books and authors.
@@ -28,6 +28,10 @@ The Smart Library API is a RESTful service designed to manage a bookstore invent
 
 * Handle Errors Gracefully: Provide meaningful error messages and appropriate HTTP status codes.
 
+## Admin
+* Manage Books: Add, update, and delete books from the inventory.
+* Manage Authors: Add, update, and delete authors from the system.
+* Monitor Users: View a list of registered users and their activities.
 
 ## System:
 * Authenticate Users: Verify user credentials and provide secure access tokens (JWTs).
