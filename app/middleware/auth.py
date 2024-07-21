@@ -1,8 +1,8 @@
 import hashlib
 import hmac
 import base64
-from app.common.database.database import get_db
-from app.common.database.models import User
+from common.database.database import get_db
+from common.database.models import User
 from datetime import datetime, timedelta, timezone
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 from typing import Optional
 import json
 
-SECRET_KEY = "your-secret-key"
+SECRET_KEY = "afas-smart-library"
 ACCESS_TOKEN_EXPIRE_MINUTES = 10
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="users/login")

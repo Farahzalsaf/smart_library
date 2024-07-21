@@ -1,5 +1,5 @@
 from fastapi import FastAPI # type: ignore
-from app.routes import users, books, authors
+from routes import users, books, authors
 
 app = FastAPI()
 

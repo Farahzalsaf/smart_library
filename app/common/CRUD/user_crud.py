@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
-from app.common.database.models import User
-from app.schemas.user import UserSchema
-from app.middleware.auth import get_password_hash, verify_password
+from common.database.models import User
+from schemas.user import UserSchema
+from middleware.auth import get_password_hash, verify_password
 
 def get_user_by_username(db: Session, username: str) -> User:
     return db.query(User).filter(User.username == username).first()

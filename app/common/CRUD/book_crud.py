@@ -2,8 +2,8 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 from typing import List
-from app.common.database.models import Book, Author, UserPreference
-from app.schemas.book import BookSchema
+from common.database.models import Book, Author, UserPreference
+from schemas.book import BookSchema
 
 def get_books(db: Session):
     return db.query(Book).all()
@@ -16,13 +16,7 @@ def create_book(db: Session, book: BookSchema):
     if not db_author:
         raise HTTPException(status_code=400, detail="Author not found")
     
-    db_book = Book(
-        book_id = book.book_id,
-        title=book.title,
-        author_id=book.author_id,
-        genre=book.genre,
-        description=book.description
-    )
+    db_book = Book(**book.dict())
     try:
             db.add(db_book)
             db.commit()
@@ -42,7 +36,6 @@ def update_book(db: Session, book_id: int, book: BookSchema):
     if not db_author:
         raise HTTPException(status_code=404, detail="Author not found")
 
-    db_book.book_id = book.book_id
     db_book.title = book.title
     db_book.author_id = book.author_id
     db_book.genre = book.genre
