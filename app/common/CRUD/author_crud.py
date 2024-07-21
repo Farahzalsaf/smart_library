@@ -2,8 +2,8 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 from fastapi import HTTPException
 from typing import List
-from app.common.database.models import Author
-from app.schemas.author import AuthorSchema
+from common.database.models import Author
+from schemas.author import AuthorSchema
 
 def get_authors(db: Session) -> List[Author]:
     return db.query(Author).all()
@@ -13,11 +13,7 @@ def get_author_by_id(db: Session, author_id: int) -> Author:
 
 def create_author(db: Session, author: AuthorSchema) -> Author:
     
-    db_author = Author(
-        author_id=author.author_id,
-        name=author.name,
-        biography=author.biography
-    )
+    db_author = Author(**author.dict())
     
     try:
         db.add(db_author)

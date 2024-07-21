@@ -1,11 +1,11 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from typing import List
-from app.common.database.database import get_db
-from app.schemas.author import AuthorSchema
-from app.middleware.auth import get_current_user, admin_required
-from app.middleware.logger import log_user_activity
-from app.common.CRUD.author_crud import get_authors, get_author_by_id, create_author, update_author, delete_author
+from common.database.database import get_db
+from schemas.author import AuthorSchema
+from middleware.auth import get_current_user, admin_required
+from middleware.logger import log_user_activity
+from common.CRUD.author_crud import get_authors, get_author_by_id, create_author, update_author, delete_author
 
 router = APIRouter()
 
@@ -29,9 +29,9 @@ def create_author_route(author: AuthorSchema, db: Session = Depends(get_db), cur
     return create_author(db, author)
 
 @router.put("/authors/{author_id}", response_model=AuthorSchema, tags=["Authors"], operation_id="update_author_record")
-def update_author_route(author: AuthorSchema, db: Session = Depends(get_db), current_user: dict = Depends(admin_required)):
+def update_author_route(author_id: int,author: AuthorSchema, db: Session = Depends(get_db), current_user: dict = Depends(admin_required)):
     try:
-        updated_author = update_author(db, author.author_id, author)
+        updated_author = update_author(db, author_id, author)
         log_user_activity(db, current_user['username'], "Author update")
         return updated_author
     except ValueError as e:

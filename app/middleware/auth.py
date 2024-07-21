@@ -1,8 +1,8 @@
 import hashlib
 import hmac
 import base64
-from app.common.database.database import get_db
-from app.common.database.models import User
+from common.database.database import get_db
+from common.database.models import User
 from datetime import datetime, timedelta, timezone
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
@@ -11,7 +11,9 @@ from typing import Optional
 import json
 from config import SECRET_KEY
 
+
 secret_key = {SECRET_KEY}
+
 ACCESS_TOKEN_EXPIRE_MINUTES = 10
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="users/login")
