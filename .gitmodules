@@ -1,0 +1,3 @@
+[submodule "app/genai-task"]
+	path = app/genai-task
+	url = https://github.com/Farahzalsaf/genai-task.git
