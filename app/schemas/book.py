@@ -13,4 +13,7 @@ class BookSchema(BaseModel):
     category: Optional[str] = None
     description: Optional[str] = None
     thumbnail: Optional[str] = None
-    authors:List[AuthorSchema] = Field(default=None, alias='_authors')
+    authors:List[AuthorSchema]
+
+    class Config:
+        from_attirbutes = True

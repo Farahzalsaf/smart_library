@@ -12,20 +12,7 @@ router = APIRouter()
 
 @router.get("/books", response_model=List[BookSchema], tags=["Books"], operation_id="get_books_list")
 def get_books_route(db: Session = Depends(get_db)):
-    books = get_books(db)
-    formatted_books = [
-        {
-            "id": book.book_id,
-            "title": book.title,
-            "authors": [author.name for author in book.authors],
-            "thumbnail": book.thumbnail,
-            "description": book.description,
-            "published_year":book.published_year,
-            "category":book.category
-        }
-        for book in books
-    ]
-    return formatted_books
+    return get_books(db)
 
 @router.get("/books/{book_id}", response_model=BookSchema, tags=["Books"], operation_id="get_book_by_id")
 def get_book_route(book_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
