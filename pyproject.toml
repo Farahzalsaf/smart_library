@@ -21,6 +21,17 @@ psycopg2 = "^2.9.9"
 sentence-transformers = "^3.0.1"
 langchain-community = "^0.2.9"
 chromadb = "^0.5.4"
+pydantic = "^2.8.2"
+torch = "^2.4.0"
+streamlit = "^1.37.0"
+sse-starlette = "^2.1.2"
+bs4 = "^0.0.2"
+langchain-ollama = "^0.1.0"
+langchain-core = "^0.2.24"
+transformers = "^4.43.3"
+langgraph = "^0.1.16"
+fastapi-cors = "^0.0.6"
+alembic = "^1.13.2"
 
 [tool.pytest.ini_options]
 pythonpath = [

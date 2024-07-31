@@ -1,26 +1,43 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
-from typing import List
+from typing import List, Optional
 from common.database.database import get_db
 from schemas.book import BookSchema
 from middleware.auth import get_current_user, admin_required
 from middleware.logger import log_user_activity
 from common.CRUD.book_crud import *
+from common.CRUD.add_booksCrud import similarity_text
 
 router = APIRouter()
 
 @router.get("/books", response_model=List[BookSchema], tags=["Books"], operation_id="get_books_list")
-def get_books_route(db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
-    log_user_activity(db, current_user['username'], "Searched for all books")
-    return get_books(db)
+def get_books_route(db: Session = Depends(get_db)):
+    books = get_books(db)
+    formatted_books = [
+        {
+            "id": book.book_id,
+            "title": book.title,
+            "authors": [author.name for author in book.authors],
+            "thumbnail": book.thumbnail,
+            "description": book.description,
+        }
+        for book in books
+    ]
+    return formatted_books
 
-@router.get("/books/{book_id}", response_model=BookSchema, tags=["Books"], operation_id="get_book_by_title")
+@router.get("/books/{book_id}", response_model=BookSchema, tags=["Books"], operation_id="get_book_by_id")
 def get_book_route(book_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     book = get_book_by_id(db, book_id)
     if not book:
-        raise HTTPException(status_code=200, detail="Book not found")
-    log_user_activity(db, current_user['username'], f"Searched for book with id: {book_id}")
-    return book
+        raise HTTPException(status_code=404, detail="Book not found")
+    formatted_book = {
+        "id": book.book_id,
+        "title": book.title,
+        "authors": [author.name for author in book.authors],  # Ensure authors are strings
+        "thumbnail": book.thumbnail,
+        "description": book.description,
+    }
+    return formatted_book
 
 @router.post("/books", response_model=BookSchema, tags=["Books"], operation_id="create_book_record")
 def create_book_route(book: BookSchema, db: Session = Depends(get_db), current_user: dict = Depends(admin_required)):
@@ -44,3 +61,11 @@ def get_recommended_books_route(db: Session = Depends(get_db), current_user: dic
         return get_recommended_books(db, current_user["username"])
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
+
+@router.get("/books/search/similarity/{user_query}")
+def get_book_similarity(user_query: str, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
+    similarity_text_result = similarity_text(user_query)
+    if not similarity_text_result:
+        raise HTTPException(status_code=404, detail="No similar books found.")
+    log_user_activity(db, current_user['username'], f"Searched for book with query: {user_query}")
+    return {"results": similarity_text_result}

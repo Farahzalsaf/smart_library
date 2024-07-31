@@ -21,9 +21,3 @@ SERVER_PORT = config['server'].getint('port')
 # JWT Configuration
 SECRET_KEY = config['secret']
 
-# Logging Configuration
-# LOGGING_CONFIG = config['logging']['config']
-
-# # Email Configuration
-# EMAIL_HOST = config['email']['host']
-# EMAIL_PORT = config['email'].getint('port')

@@ -1,7 +1,16 @@
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
-from sqlalchemy.orm import relationship
-from datetime import datetime
-from app.common.database.database import Base
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table , Float
+from sqlalchemy.orm import relationship 
+from typing import List
+from datetime import datetime 
+from common.database.database import Base 
+
+
+author_association_table = Table(
+    "author_association_table",
+    Base.metadata,
+    Column("author_id", ForeignKey("authors.author_id"), primary_key=True),
+    Column("book_id", ForeignKey("books.book_id"), primary_key=True),
+)
 
 class User(Base):
     __tablename__ = "users"
@@ -35,20 +44,31 @@ class UserActivity(Base):
 
 class Author(Base):
     __tablename__ = "authors"
-
-    author_id = Column(Integer, primary_key=True, index=True , autoincrement=True)
+    author_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     name = Column(String, index=True)
     biography = Column(String)
 
-    books = relationship("Book", back_populates="author", cascade="all, delete-orphan")
+    books = relationship(
+        "Book",
+        secondary=author_association_table,
+        back_populates="authors"
+    )
 
 class Book(Base):
     __tablename__ = "books"
-
-    book_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    book_id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
-    author_id = Column(Integer, ForeignKey("authors.author_id"))
-    genre = Column(String)
-    description = Column(String)
+    subtitle = Column(String, nullable=True)
+    published_year = Column(Integer, nullable=True)
+    average_rating = Column(Float, nullable=True)
+    num_pages = Column(Integer, nullable=True)
+    ratings_count = Column(Integer, nullable=True)
+    category = Column(String, nullable=True)
+    description = Column(String, nullable=True)
+    thumbnail = Column(String, nullable=True)
 
-    author = relationship("Author", back_populates="books")
+    authors = relationship(
+        "Author",
+        secondary=author_association_table,
+        back_populates="books"
+    )

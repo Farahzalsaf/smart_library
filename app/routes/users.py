@@ -3,7 +3,6 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from typing import List
 from common.database.database import get_db
-from common.database.models import UserActivity
 from schemas.user import UserSchema, TokenSchema, UserActivitySchema
 from middleware.auth import create_access_token, get_current_user, admin_required
 from common.CRUD.user_crud import get_user_by_username, create_user, authenticate_user
@@ -40,5 +39,6 @@ def read_users_me(current_user: dict = Depends(get_current_user), db: Session = 
 
 @router.get("/admin/activities", response_model=List[UserActivitySchema], tags=["Admin"])
 def get_user_activities(db: Session = Depends(get_db), current_user: dict = Depends(admin_required)):
+    from common.database.models import UserActivity  # Deferred import
     activities = db.query(UserActivity).all()
     return activities
