@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from sqlalchemy.exc import IntegrityError
 from typing import List
 from common.database.models import Book, Author, UserPreference , author_association_table
@@ -10,7 +10,7 @@ import logging
 
 
 def get_books(db: Session):
-    return db.query(Book).all()
+    return db.query(Book).options(joinedload(Book.authors)).all()
 
 def get_book_by_id(db: Session, book_id: int):
     return db.query(Book).filter(Book.book_id == book_id).first()

@@ -1,8 +1,9 @@
-from pydantic import BaseModel
-from typing import Optional
+from pydantic import BaseModel, Field
+from typing import Optional, List
+from schemas.author import AuthorSchema
 
 class BookSchema(BaseModel):
-    book_id: Optional[int] = None 
+    book_id: Optional[int] = None
     title: str
     subtitle: Optional[str] = None
     published_year: Optional[int] = None
@@ -12,7 +13,4 @@ class BookSchema(BaseModel):
     category: Optional[str] = None
     description: Optional[str] = None
     thumbnail: Optional[str] = None
-    authors: list[str] = None
-    class Config:
-        orm_mode = True
-        from_attributes = True
+    authors:List[AuthorSchema] = Field(default=None, alias='_authors')

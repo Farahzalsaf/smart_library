@@ -19,8 +19,8 @@ function App() {
     setLoading(true);
     fetchBooks()
       .then((data) => {
-        console.log(data); // Log the data to see its structure
-        setBooks(data.books || data); // Adjust based on response structure
+        console.log(data); 
+        setBooks(data.books || data); 
         setLoading(false);
       })
       .catch((error) => {
@@ -37,7 +37,7 @@ function App() {
     setLoading(true);
     searchBooks(query)
       .then((data) => {
-        console.log(data); // Log the data to see its structure
+        console.log(data); 
         setBooks(data.books || data); // Adjust based on response structure
         setLoading(false);
       })
@@ -49,16 +49,26 @@ function App() {
 
   return (
     <div className="App">
-      <div className="page-title">Book Library</div>
+      <div className="page-title">PwC Library</div>
       <SearchBar query={query} setQuery={setQuery} onSearch={fetchSearchedBooks} />
       {loading ? (
         <Loader />
       ) : (
         <div className="book-grid">
-          {books && books.length > 0 ? (
-            books.map((book) => <BookCard key={book.id} book={book} />)
+          {books ? ( // if not null
+            Array.isArray(books) ? ( //if its a list of books
+              books.length > 0 ? (   // vvv
+                books.map((book) => ( // map it
+                  <BookCard key={book.id} book={book} />
+                ))
+              ) : (
+                <p>No books found.</p>
+              )
+            ) : (
+              <BookCard key={books.id} book={books} /> //else just display the singular book
+            )
           ) : (
-            <p>No books found.</p>
+            <p>No books found.</p>// if its neither an array or object then no books found
           )}
         </div>
       )}

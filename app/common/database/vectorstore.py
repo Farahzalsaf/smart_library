@@ -11,7 +11,7 @@ class Book(BaseModel):
 
 # Initialize the ChromaDB PersistentClient
 client = chromadb.PersistentClient(
-    path="chroma_db", 
+    path="/Users/falsafwan002/Desktop/smart-library/smart-library/chroma_db", 
     settings=Settings(),
     tenant=DEFAULT_TENANT,
     database=DEFAULT_DATABASE,
