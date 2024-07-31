@@ -1,7 +1,11 @@
 import configparser
 
 config = configparser.ConfigParser()
-config.read('./config.ini')
+config.read('/Users/falsafwan002/Desktop/smart-library/smart-library/config.ini')
+
+print("Sections:", config.sections())
+for item in config.items():
+    print(item)
 
 # Database Configuration
 DB_HOST = config['database']['host']
@@ -18,8 +22,8 @@ SERVER_PORT = config['server'].getint('port')
 SECRET_KEY = config['secret']
 
 # Logging Configuration
-LOGGING_CONFIG = config['logging']['config']
+# LOGGING_CONFIG = config['logging']['config']
 
-# Email Configuration
-EMAIL_HOST = config['email']['host']
-EMAIL_PORT = config['email'].getint('port')
+# # Email Configuration
+# EMAIL_HOST = config['email']['host']
+# EMAIL_PORT = config['email'].getint('port')
