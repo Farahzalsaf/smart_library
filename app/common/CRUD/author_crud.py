@@ -11,6 +11,17 @@ def get_authors(db: Session) -> List[Author]:
 def get_author_by_id(db: Session, author_id: int) -> Author:
     return db.query(Author).filter(Author.author_id == author_id).first()
 
+def create_or_get_author(db: Session, author_name: str) -> Author:
+    author_instance = db.query(Author).filter(Author.name == author_name).first()
+    
+    if not author_instance:
+        author_instance = create_author(db, AuthorSchema(name=author_name))
+    
+    return author_instance
+
+def get_author_by_name(db: Session, author_name: str) -> Author:
+    return db.query(Author).filter(Author.name == author_name).first()
+
 def create_author(db: Session, author: AuthorSchema) -> Author:
     
     db_author = Author(**author.dict())
