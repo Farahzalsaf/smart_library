@@ -176,6 +176,29 @@ body {
   font-size: 10px
 }
 
+.book-description {
+  position: absolute;
+  bottom: 10px;
+  left: 10px; 
+  width: calc(100% - 20px); 
+  height: 75.5%; 
+  background: #445A9A;
+  color: white;
+  padding: 10px;
+  font-size: 80%;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  overflow-y: auto; 
+  box-sizing: border-box;
+  border-radius: 8px;
+  text-align: left;
+  text-transform: lowercase;
+}
+
+.book-item:hover .book-description {
+  opacity: 1;
+}
+
 .favorite-icon {
   position: absolute;
   top: 15px;
@@ -218,7 +241,6 @@ body {
 .rating {
   display: flex;
   align-items: center;
-  margin-bottom: 2%;
 }
 
 .rating svg {
@@ -226,7 +248,6 @@ body {
   width: 18px;
   height: 18px;
   margin-right: 5px;
-  margin-bottom: 2%;
 }
 
 .rating span {
