@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import StarRating from '../StarRating/StarRating'; // Adjusted import path
+import HeartToggle from '../Button/likeIcon';
 
 const BookCard = ({ book }) => {
   return (
@@ -9,10 +10,11 @@ const BookCard = ({ book }) => {
         <div className="card-header">
           <h2 className="book-title">{book.title}</h2>
           <div className="card-details">
-            <span className="author">by: {book.authors.map(author => author.name).join(", ")}</span>
-            <span className="year">Published: {book.published_year}</span>
+            <span className="author">{book.authors.map(author => author.name).join(", ")}</span>
+            <span className="year">{book.published_year}</span>
           </div>
           <div className="favorite-icon">
+            <HeartToggle />
           </div>
         </div>
         <div className="card-image">

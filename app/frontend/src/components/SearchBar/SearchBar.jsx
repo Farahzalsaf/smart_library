@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import DropdownButton from '../Button/DropdownButton';
+import HeartButton from '../Button/HeartIcon'; 
 
 const SearchBar = ({ query, setQuery, onSearch }) => {
   const handleKeyDown = (e) => {
@@ -32,8 +34,14 @@ const SearchBar = ({ query, setQuery, onSearch }) => {
           placeholder="Type book title/genre/name of author"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={handleKeyDown} // Use onKeyDown instead of onKeyPress
+          onKeyDown={handleKeyDown}
         />
+        <div className="dropdown-container">
+          <DropdownButton />
+        </div>
+        <div className="heart-button-container">
+          <HeartButton />
+        </div>
       </div>
     </div>
   );

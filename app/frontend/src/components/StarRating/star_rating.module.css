@@ -1,11 +1,13 @@
 .star-rating {
     display: flex;
+    margin-bottom: 2%;
   }
   
   .star {
     position: relative;
     display: inline-block;
     margin: 0 2px;
+    margin-bottom: 2%;
   }
   
   .star .star-full {

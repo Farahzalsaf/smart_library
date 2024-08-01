@@ -1,0 +1,14 @@
+.heart-button-container {
+    position: absolute;
+    right: 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .heart-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    scroll-margin-inline-end: 100px;
+  }
