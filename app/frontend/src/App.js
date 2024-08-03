@@ -1,9 +1,10 @@
-// App.js
 import React, { useState, useEffect } from 'react';
 import SearchBar from './components/SearchBar/SearchBar.jsx';
 import BookCard from './components/BookCard/BookCard.jsx';
 import Loader from './components/Loader/Loader.jsx';
 import { fetchBooks, searchBooks } from './services/BookService';
+import LoginDropdown from './components/Button/LoginDropdown.jsx'; 
+import ChatbotButton from './components/Button/ChatbotButton.jsx'; 
 import './App.css';
 
 function App() {
@@ -47,10 +48,17 @@ function App() {
       });
   };
 
+  
+
   return (
     <div className="App">
-      <div className="page-title">PwC Library</div>
-      <div style={{"height":"0.75px", "background-color": "#EAEFF5"}}></div>
+      <div className="header">
+        <div className="page-title">
+          <span>PwC Library</span>
+        </div>
+        <LoginDropdown /> 
+      </div>
+      <div style={{ height: "0.75px", backgroundColor: "#EAEFF5" }}></div>
       <div className="toolbar">
         <SearchBar query={query} setQuery={setQuery} onSearch={fetchSearchedBooks} />
       </div>
@@ -58,23 +66,22 @@ function App() {
         <Loader />
       ) : (
         <div className="book-grid">
-          {books ? ( // if not null
-            Array.isArray(books) ? ( // if its a list of books
-              books.length > 0 ? (   // vvv
-                books.map((book) => ( // map it
-                  <BookCard key={book.id} book={book} />
-                ))
+          {books ? (
+            Array.isArray(books) ? (
+              books.length > 0 ? (
+                books.map((book) => <BookCard key={book.id} book={book} />)
               ) : (
                 <p>No books found.</p>
               )
             ) : (
-              <BookCard key={books.id} book={books} /> // else just display the singular book
+              <BookCard key={books.id} book={books} />
             )
           ) : (
-            <p>No books found.</p> // if its neither an array or object then no books found
+            <p>No books found.</p>
           )}
         </div>
       )}
+      <ChatbotButton onClick={ChatbotButton} /> 
     </div>
   );
 }
