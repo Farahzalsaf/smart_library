@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import styles from './ChatbotButton.module.css';
 
 const ChatbotButton = () => {
@@ -8,16 +9,50 @@ const ChatbotButton = () => {
   ]);
 
   const handleButtonClick = () => {
-    setIsOpen(!isOpen); // Toggle chat window
+    setIsOpen(!isOpen);
   };
 
-  const handleSendMessage = (message) => {
+  const handleSendMessage = async (message) => {
     if (message.trim() !== '') {
       setMessages((prevMessages) => [
         ...prevMessages,
-        { sender: 'user', text: message },
-        { sender: 'bot', text: 'Alright, we have a few books matching that description. Generating responses...' }
+        { sender: 'user', text: message }
       ]);
+
+      try {
+        // Set session_id and query according to your backend's requirements
+        const payload = {
+          session_id: "1", // replace with your actual session ID
+          query: message
+        };
+
+        console.log('Sending message to backend:', payload);
+        const response = await axios.post('http://127.0.0.1:8000/chat', payload, {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+
+        console.log('Backend response:', response);
+
+        if (response.status === 200) {
+          const data = response.data;
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            { sender: 'bot', text: data.response }
+          ]);
+        } else {
+          console.error('Server responded with an error:', response.status, response.statusText);
+        }
+      } catch (error) {
+        if (error.response) {
+          console.error('Server response error:', error.response.data);
+        } else if (error.request) {
+          console.error('Network error, no response received:', error.request);
+        } else {
+          console.error('Error in setting up request:', error.message);
+        }
+      }
     }
   };
 
