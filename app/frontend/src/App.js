@@ -58,7 +58,7 @@ function App() {
     <div className="App">
       <header className="header">
         <div className="page-title">Library</div>
-        <div className="header-right">
+        <div className="header-left">
           <LoginDropdown navigateTo={navigateTo} />
         </div>
       </header>

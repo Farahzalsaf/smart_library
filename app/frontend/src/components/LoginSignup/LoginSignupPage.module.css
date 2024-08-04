@@ -1,88 +1,97 @@
-/* Main container */
-.login-signup-container {
+/* General Styles */
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #19191B;
+    color: #FFFFFF;
+    height: 100%;
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+  
+  /* Main container */
+  .login-signup-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    background-color: #19191B;
-    padding: 20px; /* Added padding */
-}
-
-/* Form container */
-.form-container {
-    background-color: #172242;
-    border-radius: 12px;
-    padding: 30px; /* Reduced padding */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    width: 350px; /* Reduced width */
-    max-width: 90%;
+    min-height: 100%; /* Ensure it covers the full viewport height */
+    padding: 20px 0; /* Add some padding for top and bottom */
+    box-sizing: border-box; /* Ensure padding is included in the height calculation */
+  }
+  
+  /* Form container */
+  .form-container {
+    background-color: #172242; /* Dark blue background */
+    border-radius: 12px; /* Rounded corners */
+    padding: 20px 40px; /* Adjusted padding for a wider appearance */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    width: 500px; /* Increased width */
+    max-width: 90%; /* Responsive max-width */
     color: #ffffff;
-}
-
-/* Form headers */
-.form-container h2 {
+    box-sizing: border-box; /* Ensure padding is included in the width calculation */
+  }
+  
+  /* Form headers */
+  .form-container h2 {
     text-align: center;
-    margin-bottom: 20px;
-    color: #FFFFFF;
-    font-size: 20px; /* Reduced font size */
-    font-weight: 500;
-}
-
-/* Label styles */
-.form-container label {
+    margin-bottom: 10px; /* Reduced bottom margin */
+    color: #FFFFFF; /* White text */
+    font-size: 20px; /* Slightly smaller font size */
+  }
+  
+  /* Label styles */
+  .form-container label {
     display: block;
     margin-bottom: 5px;
-    color: #bbbbbb;
-    font-size: 14px;
-}
-
-/* Input field styles */
-.form-container input {
+    color: #bbbbbb; /* Light grey color */
+  }
+  
+  /* Input field styles */
+  .form-container input {
     width: 100%;
     padding: 8px; /* Reduced padding */
     margin-bottom: 15px; /* Reduced margin */
     border-radius: 5px;
     border: none;
-    background-color: #1F2A44;
+    background-color: #1F2A44; /* Slightly darker blue */
     color: #FFFFFF;
-    font-size: 14px; /* Reduced font size */
-    outline: none;
-}
-
-.form-container input::placeholder {
-    color: #aaaaaa;
-}
-
-/* Button styles */
-.form-container button {
+    font-size: 14px; /* Slightly smaller font size */
+    outline: none; /* Remove outline */
+  }
+  
+  .form-container input::placeholder {
+    color: #aaaaaa; /* Placeholder color */
+  }
+  
+  /* Button styles */
+  .form-container button {
     width: 100%;
     padding: 10px;
     border-radius: 5px;
     border: none;
-    background-color: #41D0C8;
-    color: #000000;
+    background-color: #41D0C8; /* Teal background */
+    color: #000000; /* Black text */
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-top: 10px;
-}
-
-.form-container button:hover {
-    background-color: #36a89e;
-}
-
-/* Divider */
-.divider {
+  }
+  
+  .form-container button:hover {
+    background-color: #36a89e; /* Darker teal on hover */
+  }
+  
+  /* Divider */
+  .divider {
     border: none;
     border-top: 1px solid #555555;
-    margin: 20px 0;
-}
-
-/* Password requirements */
-.password-requirements {
-    font-size: 13px; /* Reduced font size */
-    color: #bbbbbb;
-    margin-bottom: 20px;
-    text-align: left;
-    line-height: 1.5;
-}
+    margin: 15px 0; /* Reduced margin */
+  }
+  
+  /* Password requirements */
+  .password-requirements {
+    font-size: 12px; /* Slightly smaller font size */
+    color: #bbbbbb; /* Light grey color */
+    margin-bottom: 15px; /* Reduced margin */
+  }
+  
