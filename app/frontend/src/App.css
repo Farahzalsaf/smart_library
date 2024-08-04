@@ -10,15 +10,20 @@ body {
 /* Page Title */
 .page-title {
   text-align: left;
-  margin: 20px 0;
+  margin: 40px 0;
   font-size: 24px;
   margin-left: 40px;
 }
 
-/* Page Title */
 .page-title {
   font-size: 24px;
   color: #ffffff;
+}
+
+.header-left {
+  position: absolute;
+  right: 20px; /* Adjust as necessary */
+  top: 20px;
 }
 
 /* Title Button Styling */
@@ -27,7 +32,6 @@ body {
   border: none;
   cursor: pointer;
   padding: 0;
-  transform: translateX(1260px);
 }
 
 .title-button svg {
@@ -51,8 +55,8 @@ body {
   margin-right: 80px;
   border-radius: 14px;
   overflow: visible;
-  position: relative; /* Ensure it's positioned above other elements */
-  z-index: 2; /* Position above other elements */
+  position: relative;
+  z-index: 2;
 }
 
 /* Search Bar */
@@ -64,7 +68,7 @@ body {
 }
 
 .search-bar input {
-  flex-grow: 1; /* Allow input to grow */
+  flex-grow: 1;
   padding: 10px;
   font-size: 16px;
   border-radius: 14px;
@@ -84,8 +88,8 @@ body {
 }
 
 .dropdown-container {
-  margin-left: 10px; /* Space between input and dropdown */
-  flex-shrink: 0; /* Prevent shrinking */
+  margin-left: 10px;
+  flex-shrink: 0;
 }
 
 .dropdown-button {
@@ -97,7 +101,7 @@ body {
 }
 
 .dropdown-button svg {
-  fill: #FFFFFF; /* Icon color */
+  fill: #FFFFFF;
 }
 
 .button {
@@ -111,7 +115,7 @@ body {
   cursor: pointer;
   padding: 0;
   margin-left: 10px;
-  flex-shrink: 0; /* Prevent shrinking */
+  flex-shrink: 0;
 }
 
 .button svg {
@@ -127,16 +131,14 @@ body {
 
 /* Heart Button */
 .heart-button-container {
-  margin-left: 10px; /* Space between dropdown and heart button */
+  margin-left: 10px;
   text-align: right;
-  transform: translateX(520px);
-  flex-shrink: 0; /* Prevent shrinking */
+  flex-shrink: 0;
 }
 
 .heart-button {
   background: none;
   border: none;
-  text-align: right;
   cursor: pointer;
   padding: 0;
 }
@@ -147,7 +149,7 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   overflow-y: auto;
-  height: calc(100vh - 160px); /* Adjust as per header height */
+  height: calc(100vh - 160px);
   padding: 0 20px;
 }
 
@@ -270,7 +272,7 @@ body {
 }
 
 .rating svg {
-  fill: #FFE45A; /* Star color */
+  fill: #FFE45A;
   width: 18px;
   height: 18px;
   margin-right: 5px;
@@ -283,34 +285,30 @@ body {
 
 /* Custom Scrollbar Styles */
 ::-webkit-scrollbar {
-  width: 12px; /* Ensure width is consistent with container */
+  width: 12px;
 }
 
-/* Custom Scrollbar Track */
 ::-webkit-scrollbar-track {
-  background: #172242; /* Ensure the background matches your design */
+  background: #172242;
 }
 
-/* Custom Scrollbar Thumb */
 ::-webkit-scrollbar-thumb {
-  background-color: #D9D9D9; /* Color matching the SVG fill */
-  border-radius: 50% / 48%; /* Elliptical shape */
-  height: 13px; /* Height of the thumb */
-  margin: 2px 0; /* Optional: Adds some spacing */
+  background-color: #D9D9D9;
+  border-radius: 50%;
+  margin: 2px 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: #445A9A;
 }
 
-/* Additional styles for positioning */
 .scrollbar-container {
   position: absolute;
-  top: 167px; /* Adjust this value based on your layout */
-  right: 0; /* Align to the far right of the content area */
-  height: calc(100vh - 167px); /* Make sure this covers the entire scrollable content */
-  width: 12px; /* Width matching the scrollbar */
-  z-index: 1; /* Ensure it's above the content */
+  top: 167px;
+  right: 0;
+  height: calc(100vh - 167px);
+  width: 12px;
+  z-index: 1;
 }
 
 .scrollbar {
@@ -321,19 +319,19 @@ body {
 
 /* Custom Scrollbar for .book-description */
 .book-description::-webkit-scrollbar {
-  width: 8px; /* Adjusted width for the internal scrollbar */
+  width: 8px;
 }
 
 .book-description::-webkit-scrollbar-track {
-  background: #172242; /* Background matching the card */
+  background: #172242;
 }
 
 .book-description::-webkit-scrollbar-thumb {
   background-color: #D9D9D9;
-  border-radius: 10px; /* Slight rounding for a better appearance */
-  margin: 2px; /* Space between thumb and track */
+  border-radius: 10px;
+  margin: 2px;
 }
 
 .book-description::-webkit-scrollbar-thumb:hover {
-  background-color: #bbbbbb; /* Lighter color on hover */
+  background-color: #bbbbbb;
 }

@@ -15,10 +15,9 @@ class Chatbot:
         elif intent == Intents.GET_RECOMMENDATIONS:
             response = self.handle_get_recommendations(query)
         elif intent == Intents.GET_SUMMARY:
-            response = self.handle_get_summary(query)
+            response = self.handle_get_summary(session_id, query)
         else:
-            
-            system_prompt = "Hi, how can I assist you today?" 
+            system_prompt = "Hi, how can I assist you today?"
             response = generate_response(system_prompt, session_id, query)
 
         return response
@@ -59,9 +58,10 @@ class Chatbot:
         recommendations = self.get_recommendations(query)
         return {"recommendations": recommendations}
 
-    def handle_get_summary(self, query):
-        summary = generate_response("summary", query)
-        return {"summary": summary}
+    def handle_get_summary(self, session_id, query):
+        system_prompt = "summary"
+        summary = generate_response(system_prompt, session_id, query)
+        return summary
 
     def get_recommendations(self, query):
         similar_items = similarity_text(query)
@@ -70,13 +70,11 @@ class Chatbot:
 
 def handle_get_recommendations(self, query):
     recommendations = self.get_recommendations(query)
-    # Apply filtering logic based on metadata
     filters = self.parse_filters(query)
     filtered_recommendations = [rec for rec in recommendations if self.apply_filters(rec, filters)]
     return {"recommendations": filtered_recommendations}
 
 def parse_filters(self, query):
-    # Parse filters from query
     filters = {}
     parts = query.split(",")
     for part in parts:
@@ -88,7 +86,6 @@ def parse_filters(self, query):
     return filters
 
 def apply_filters(self, rec, filters):
-    # Apply filters to a single recommendation
     for key, value in filters.items():
         if rec.get(key) != value:
             return False

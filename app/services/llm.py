@@ -47,7 +47,7 @@ def generate_cntxt(system_prompt: str, session_id: str, query: str) -> str:
     llm = OllamaLLM(model="llama3.1")
     
     prompt = ChatPromptTemplate.from_messages([
-        ("system", system_prompt),
+        ("system", "You are an AI Library assisntant and your name is lucky, your job is to help the user with their needs whether it is adding a book to the database, getting a summary of a book, getting information about a certain book, you can also chitchat with the user when it is applicable. Do not deviaite subjects from the user's intent. "),
         ("human", query),
     ])
     
@@ -73,7 +73,7 @@ def generate_response(system_prompt: str, session_id: str, query: str) -> str:
     llm = OllamaLLM(model="llama3.1")
     
     prompt = ChatPromptTemplate.from_messages([
-        ("system", system_prompt),
+        ("system", "You are an AI Library assisntant and your name is lucky, your job is to help the user with their needs whether it is adding a book to the database, getting a summary of a book, getting information about a certain book, you can also chitchat with the user when it is applicable. Do not deviaite subjects from the user's intent. "),
         ("human", query),
     ])
     
