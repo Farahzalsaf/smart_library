@@ -1,4 +1,3 @@
-/* General Styles */
 html, body {
     margin: 0;
     padding: 0;
@@ -6,71 +5,65 @@ html, body {
     background-color: #19191B;
     color: #FFFFFF;
     height: 100%;
-    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-y: auto;
   }
   
-  /* Main container */
   .login-signup-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100%; /* Ensure it covers the full viewport height */
-    padding: 20px 0; /* Add some padding for top and bottom */
-    box-sizing: border-box; /* Ensure padding is included in the height calculation */
+    min-height: 100%;
+    padding: 20px 0;
+    box-sizing: border-box;
   }
   
-  /* Form container */
   .form-container {
-    background-color: #172242; /* Dark blue background */
-    border-radius: 12px; /* Rounded corners */
-    padding: 20px 40px; /* Adjusted padding for a wider appearance */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow */
-    width: 500px; /* Increased width */
-    max-width: 90%; /* Responsive max-width */
+    background-color: #172242;
+    border-radius: 12px;
+    padding: 20px 40px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    width: 500px;
+    max-width: 90%;
     color: #ffffff;
-    box-sizing: border-box; /* Ensure padding is included in the width calculation */
+    box-sizing: border-box;
   }
   
-  /* Form headers */
   .form-container h2 {
     text-align: center;
-    margin-bottom: 10px; /* Reduced bottom margin */
-    color: #FFFFFF; /* White text */
-    font-size: 20px; /* Slightly smaller font size */
+    margin-bottom: 10px;
+    color: #FFFFFF;
+    font-size: 20px;
   }
   
-  /* Label styles */
   .form-container label {
     display: block;
     margin-bottom: 5px;
-    color: #bbbbbb; /* Light grey color */
+    color: #bbbbbb;
   }
   
-  /* Input field styles */
   .form-container input {
     width: 100%;
-    padding: 8px; /* Reduced padding */
-    margin-bottom: 15px; /* Reduced margin */
+    padding: 8px;
+    margin-bottom: 15px;
     border-radius: 5px;
     border: none;
-    background-color: #1F2A44; /* Slightly darker blue */
+    background-color: #1F2A44;
     color: #FFFFFF;
-    font-size: 14px; /* Slightly smaller font size */
-    outline: none; /* Remove outline */
+    font-size: 14px;
+    outline: none;
   }
   
   .form-container input::placeholder {
-    color: #aaaaaa; /* Placeholder color */
+    color: #aaaaaa;
   }
   
-  /* Button styles */
   .form-container button {
     width: 100%;
     padding: 10px;
     border-radius: 5px;
     border: none;
-    background-color: #41D0C8; /* Teal background */
-    color: #000000; /* Black text */
+    background-color: #41D0C8;
+    color: #000000;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -78,20 +71,18 @@ html, body {
   }
   
   .form-container button:hover {
-    background-color: #36a89e; /* Darker teal on hover */
+    background-color: #36a89e;
   }
   
-  /* Divider */
   .divider {
     border: none;
     border-top: 1px solid #555555;
-    margin: 15px 0; /* Reduced margin */
+    margin: 15px 0;
   }
   
-  /* Password requirements */
   .password-requirements {
-    font-size: 12px; /* Slightly smaller font size */
-    color: #bbbbbb; /* Light grey color */
-    margin-bottom: 15px; /* Reduced margin */
+    font-size: 12px;
+    color: #bbbbbb;
+    margin-bottom: 15px;
   }
   

@@ -10,18 +10,18 @@
 }
 
 .dropdownMenu {
-  display: none; /* Hide by default */
+  display: none;
   position: absolute;
   top: 100%;
   right: 0;
-  background-color: #1F2A44; /* Match the theme */
+  background-color: #1F2A44;
   border-radius: 5px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   z-index: 1000;
 }
 
 .dropdownMenu.show {
-  display: block; /* Show when dropdown is open */
+  display: block;
 }
 
 .dropdownMenu ul {
@@ -33,10 +33,10 @@
 .dropdownMenu ul li {
   padding: 10px;
   cursor: pointer;
-  color: #FFFFFF; /* Text color */
+  color: #FFFFFF;
 }
 
 .dropdownMenu ul li:hover {
-  background-color: #41D0C8; /* Highlight on hover */
-  color: #000; /* Text color on hover */
+  background-color: #41D0C8;
+  color: #000;
 }
