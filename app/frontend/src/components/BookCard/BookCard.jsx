@@ -13,7 +13,6 @@ const BookCard = ({ book }) => {
             <div className="card-header">
               <h2 className="book-title">{book.title}</h2>
               <div className="card-details">
-                {/* Check if authors is an array and map through it to display names */}
                 <span className="author">
                   {Array.isArray(book.authors) 
                     ? book.authors.map(author => typeof author === 'object' ? author.name : author).join(", ")
@@ -55,8 +54,8 @@ BookCard.propTypes = {
     thumbnail: PropTypes.string,
     title: PropTypes.string.isRequired,
     authors: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.string.isRequired), // In case authors are an array of strings
-      PropTypes.string, // In case authors are a single string
+      PropTypes.arrayOf(PropTypes.string.isRequired), 
+      PropTypes.string,
     ]).isRequired,
     published_year: PropTypes.number,
     categories: PropTypes.string.isRequired,
