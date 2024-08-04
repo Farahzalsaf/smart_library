@@ -12,19 +12,19 @@
 .form-container {
     background-color: #172242;
     border-radius: 12px;
-    padding: 40px;
+    padding: 30px; /* Reduced padding */
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    width: 450px;
-    max-width: 100%;
+    width: 350px; /* Reduced width */
+    max-width: 90%;
     color: #ffffff;
 }
 
 /* Form headers */
 .form-container h2 {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     color: #FFFFFF;
-    font-size: 24px;
+    font-size: 20px; /* Reduced font size */
     font-weight: 500;
 }
 
@@ -39,13 +39,13 @@
 /* Input field styles */
 .form-container input {
     width: 100%;
-    padding: 12px;
-    margin-bottom: 20px;
+    padding: 8px; /* Reduced padding */
+    margin-bottom: 15px; /* Reduced margin */
     border-radius: 5px;
     border: none;
     background-color: #1F2A44;
     color: #FFFFFF;
-    font-size: 16px;
+    font-size: 14px; /* Reduced font size */
     outline: none;
 }
 
@@ -56,7 +56,7 @@
 /* Button styles */
 .form-container button {
     width: 100%;
-    padding: 12px;
+    padding: 10px;
     border-radius: 5px;
     border: none;
     background-color: #41D0C8;
@@ -75,12 +75,12 @@
 .divider {
     border: none;
     border-top: 1px solid #555555;
-    margin: 30px 0;
+    margin: 20px 0;
 }
 
 /* Password requirements */
 .password-requirements {
-    font-size: 14px;
+    font-size: 13px; /* Reduced font size */
     color: #bbbbbb;
     margin-bottom: 20px;
     text-align: left;
