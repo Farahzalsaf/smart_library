@@ -1,4 +1,4 @@
-/* General Styles */
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -7,7 +7,7 @@ body {
   overflow-y: hidden;
 }
 
-/* Page Title */
+
 .page-title {
   text-align: left;
   margin: 40px 0;
@@ -22,11 +22,11 @@ body {
 
 .header-left {
   position: absolute;
-  right: 20px; /* Adjust as necessary */
+  right: 20px;
   top: 20px;
 }
 
-/* Title Button Styling */
+
 .title-button {
   background: none;
   border: none;
@@ -40,7 +40,7 @@ body {
 }
 
 .title-button:hover svg {
-  fill: #1b9c9c; /* Optional: Change color on hover */
+  fill: #1b9c9c; 
 }
 
 /* Search Bar Container */
@@ -59,7 +59,7 @@ body {
   z-index: 2;
 }
 
-/* Search Bar */
+
 .search-bar {
   display: flex;
   align-items: center;
@@ -129,7 +129,7 @@ body {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Heart Button */
+
 .heart-button-container {
   margin-left: 10px;
   text-align: right;
@@ -143,7 +143,7 @@ body {
   padding: 0;
 }
 
-/* Book Grid */
+
 .book-grid {
   display: flex;
   flex-wrap: wrap;
@@ -153,12 +153,11 @@ body {
   padding: 0 20px;
 }
 
-/* Book Item */
+
 .book-item {
   margin: 10px;
 }
 
-/* Card Styles */
 .card {
   position: relative;
   width: 200px;
@@ -283,7 +282,7 @@ body {
   color: #FFFFFF;
 }
 
-/* Custom Scrollbar Styles */
+
 ::-webkit-scrollbar {
   width: 12px;
 }
@@ -317,7 +316,7 @@ body {
   background: #172242;
 }
 
-/* Custom Scrollbar for .book-description */
+
 .book-description::-webkit-scrollbar {
   width: 8px;
 }
