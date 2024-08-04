@@ -74,6 +74,39 @@
     padding-bottom: 50px; /* Add padding to make space for the input field */
   }
   
+  /* Custom scrollbar styles */
+  /* Style for WebKit browsers (Chrome, Safari) */
+  .messagesBackground::-webkit-scrollbar {
+    width: 6px; /* Width of the scroll bar */
+  }
+  
+  .messagesBackground::-webkit-scrollbar-track {
+    background: #172242; /* Background of the scroll bar track */
+    border-radius: 8px 0px 0px 0px;
+  }
+  
+  .messagesBackground::-webkit-scrollbar-thumb {
+    background-color: #445A9A; /* Color of the scroll bar thumb */
+    border-radius: 10px;
+    border: 2px solid #172242; /* Optional: to create a space around the thumb */
+  }
+  
+  /* Style for Firefox */
+  .messagesBackground {
+    scrollbar-width: thin;
+    scrollbar-color: #445A9A #172242;
+  }
+  
+  /* Hide the scrollbar for IE, Edge, and other browsers */
+  .messagesBackground {
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+  }
+  
+  .messagesBackground::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+  
   /* Styles for bot and user messages */
   .botMessage, .userMessage {
     background: #2C3E50;
@@ -111,6 +144,7 @@
     background-color: #445A9A; /* Set background color to #445A9A */
     color: white; /* Set text color to white for better contrast */
   }
+  
   .inputField::placeholder {
     color: white; /* Set placeholder text color to white */
   }

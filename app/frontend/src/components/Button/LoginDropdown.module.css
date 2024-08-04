@@ -1,50 +1,42 @@
 .dropdownContainer {
-  position: absolute; /* Ensure it can be positioned relative to the parent */
-  right: 20px; /* Adjust as needed to match the previous position of title-button */
-  top: 20px; /* Align with the desired top positioning */
-  display: inline-block;
-  overflow: visible;
-  z-index: 1000; /* Ensure it's above other content */
+  position: relative;
 }
 
 .dropdownButton {
   background: none;
   border: none;
   cursor: pointer;
-  display: flex;
-  align-items: center;
   padding: 0;
 }
 
-.dropdownButton svg {
-  fill: #FFFFFF; /* Ensure SVG icon is visible */
+.dropdownMenu {
+  display: none; /* Hide by default */
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #1F2A44; /* Match the theme */
+  border-radius: 5px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
 }
 
-.dropdownMenu {
-  position: absolute;
-  top: calc(100% + 5px); /* Position just below the button */
-  right: 0;
-  background-color: #172242; /* Dark background color */
-  color: #F7F5FF; /* Text color */
-  border-radius: 4px;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-  z-index: 10000; /* Higher than other elements */
-  min-width: 120px;
-  overflow: visible;
+.dropdownMenu.show {
+  display: block; /* Show when dropdown is open */
 }
 
 .dropdownMenu ul {
   list-style: none;
   margin: 0;
-  padding: 0; /* Remove default padding */
+  padding: 0;
 }
 
-.dropdownMenu li {
-  padding: 10px 16px; /* Adjusted padding for better appearance */
+.dropdownMenu ul li {
+  padding: 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  color: #FFFFFF; /* Text color */
 }
 
-.dropdownMenu li:hover {
-  background-color: #575757; /* Hover effect */
+.dropdownMenu ul li:hover {
+  background-color: #41D0C8; /* Highlight on hover */
+  color: #000; /* Text color on hover */
 }

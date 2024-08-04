@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './LoginDropdown.module.css';
 
-const LoginDropdown = () => {
+const LoginDropdown = ({ navigateTo }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -28,10 +28,10 @@ const LoginDropdown = () => {
         </svg>
       </button>
       {isOpen && (
-        <div className={styles.dropdownMenu}>
+        <div className={`${styles.dropdownMenu} ${isOpen ? styles.show : ''}`}>
           <ul>
-            <li>Log In</li>
-            <li>Sign Up</li>
+            <li onClick={() => navigateTo('loginSignup')}>Log In</li>
+            <li onClick={() => navigateTo('loginSignup')}>Sign Up</li>
           </ul>
         </div>
       )}

@@ -20,9 +20,8 @@ const ChatbotButton = () => {
       ]);
 
       try {
-        // Set session_id and query according to your backend's requirements
         const payload = {
-          session_id: "1", // replace with your actual session ID
+          session_id: "1", 
           query: message
         };
 
