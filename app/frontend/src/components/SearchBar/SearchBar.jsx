@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import DropdownButton from '../Button/DropdownButton';
-import HeartButton from '../Button/HeartIcon'; 
+import HeartButton from '../Button/HeartIcon';
 
-const SearchBar = ({ query, setQuery, onSearch }) => {
+
+const SearchBar = ({ onSearch }) => {
+  const [query, setQuery] = useState('');
+
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      onSearch();
+      e.preventDefault(); // Prevent form submission
+      onSearch(query);
     }
   };
 
   return (
     <div className="search-bar-container">
       <div className="search-bar">
-        <button className="button" onClick={onSearch}>
+        <button className="button" onClick={() => onSearch(query)}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <mask id="mask0_1_1860" style={{ maskType: "luminance" }} maskUnits="userSpaceOnUse" x="2" y="2" width="20" height="20">
               <path fillRule="evenodd" clipRule="evenodd" d="M2 2H21.4768V21.477H2V2Z" fill="white"/>
@@ -48,8 +52,6 @@ const SearchBar = ({ query, setQuery, onSearch }) => {
 };
 
 SearchBar.propTypes = {
-  query: PropTypes.string.isRequired,
-  setQuery: PropTypes.func.isRequired,
   onSearch: PropTypes.func.isRequired,
 };
 

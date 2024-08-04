@@ -1,57 +1,55 @@
-/* BookCard.css */
 .book-item {
-    position: relative;
-    width: 240px;
-    height: 375px;
-    margin: 10px;
-    border-radius: 8px 0px 0px 0px;
-    overflow: hidden;
-    background-color: #172242;
-  }
-  
-  .card-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .card {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-  
-  .card-front {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .card-image img {
-    width: 100%;
-    height: auto;
-  }
-  
-  .book-description {
-    position: absolute;
-    width: 90%;
-    height: 80%;
-    background: #445A9A; /* Semi-transparent background */
-    color: white;
-    padding: 10px;
-    font-size: 80%;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    overflow-y: auto;
-    box-sizing: border-box;
-    border-radius: 15px;
-    text-align: left;
-    text-transform: lowercase;
-    transform: translateX(7px) translateY(60px);
-  }
-  
-  .book-item:hover .book-description {
-    opacity: 1;
-  }
-  
+  position: relative;
+  width: 240px;
+  height: 375px;
+  margin: 10px;
+  border-radius: 8px 0px 0px 0px;
+  overflow: hidden;
+  background-color: #172242;
+}
+
+.card-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.card-front {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.card-image img {
+  width: 100%;
+  height: auto;
+}
+
+.book-description {
+  position: absolute;
+  width: 90%;
+  height: 80%;
+  background: #445A9A;
+  color: white;
+  padding: 10px;
+  font-size: 80%;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  overflow-y: auto;
+  box-sizing: border-box;
+  border-radius: 15px;
+  text-align: left;
+  text-transform: lowercase;
+  transform: translateX(7px) translateY(60px);
+}
+
+.book-item:hover .book-description {
+  opacity: 1;
+}

@@ -1,18 +1,18 @@
+// App.js
 import React, { useState, useEffect } from 'react';
 import SearchBar from './components/SearchBar/SearchBar.jsx';
 import BookCard from './components/BookCard/BookCard.jsx';
 import Loader from './components/Loader/Loader.jsx';
 import { fetchBooks, searchBooks } from './services/BookService.js';
-import LoginDropdown from './components/Button/LoginDropdown.jsx'; 
-import ChatbotButton from './components/Button/ChatbotButton.jsx'; 
+import LoginDropdown from './components/Button/LoginDropdown.jsx';
+import ChatbotButton from './components/Button/ChatbotButton.jsx';
 import LoginSignupPage from './components/LoginSignup/LoginSignupPage.jsx';
 import './App.css';
 
 function App() {
   const [books, setBooks] = useState([]);
-  const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState('home'); // State to manage page navigation
+  const [currentPage, setCurrentPage] = useState('home');
 
   useEffect(() => {
     if (currentPage === 'home') {
@@ -33,22 +33,34 @@ function App() {
       });
   };
 
-  const fetchSearchedBooks = () => {
-    if (!query) {
-      fetchAllBooks();
-      return;
-    }
+  const handleSearch = async (query) => {
     setLoading(true);
-    searchBooks(query)
-      .then((data) => {
-        setBooks(data.books || data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error fetching books:', error);
-        setLoading(false);
+    try {
+      const data = await searchBooks(query);
+      console.log('Nested results:', data.results);
+  
+      // Flatten the nested structure to extract book objects and ensure authors is an array
+      const books = data.results.flatMap(innerArray => {
+        if (Array.isArray(innerArray) && innerArray.length > 0) {
+          const booksArray = innerArray[0];
+          return Array.isArray(booksArray) ? booksArray.filter(item => typeof item === 'object' && item !== null).map(book => ({
+            ...book,
+            authors: Array.isArray(book.authors) ? book.authors : book.authors.split(',').map(author => author.trim())
+          })) : [];
+        }
+        return [];
       });
+  
+      console.log('Flattened books:', books); // Log the flattened array of books
+      setBooks(books);
+    } catch (error) {
+      console.error('Error searching books:', error);
+      setBooks([]);
+    } finally {
+      setLoading(false);
+    }
   };
+  
 
   const navigateTo = (page) => {
     setCurrentPage(page);
@@ -67,20 +79,22 @@ function App() {
       {currentPage === 'home' ? (
         <>
           <div className="toolbar">
-            <SearchBar query={query} setQuery={setQuery} onSearch={fetchSearchedBooks} />
+            <SearchBar onSearch={handleSearch} />
           </div>
           {loading ? (
             <Loader />
           ) : (
-            <div className="book-grid">
-              {books.length > 0 ? (
-                books.map((book) => <BookCard key={book.id} book={book} />)
-              ) : (
-                <p>No books found.</p>
-              )}
-            </div>
+          <div className="book-grid">
+            {books.length > 0 ? (
+              books.map((book, index) => (
+                <BookCard key={index} book={book} />
+              ))
+            ) : (
+              <p>No books found.</p>
+            )}
+          </div>
           )}
-          <ChatbotButton onClick={ChatbotButton} />
+          <ChatbotButton />
         </>
       ) : (
         <LoginSignupPage />
