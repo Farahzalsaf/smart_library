@@ -1,4 +1,3 @@
-// App.js
 import React, { useState, useEffect } from 'react';
 import SearchBar from './components/SearchBar/SearchBar.jsx';
 import BookCard from './components/BookCard/BookCard.jsx';
@@ -39,7 +38,7 @@ function App() {
       const data = await searchBooks(query);
       console.log('Nested results:', data.results);
   
-      // Flatten the nested structure to extract book objects and ensure authors is an array
+      
       const books = data.results.flatMap(innerArray => {
         if (Array.isArray(innerArray) && innerArray.length > 0) {
           const booksArray = innerArray[0];
@@ -51,7 +50,7 @@ function App() {
         return [];
       });
   
-      console.log('Flattened books:', books); // Log the flattened array of books
+      console.log('Flattened books:', books);
       setBooks(books);
     } catch (error) {
       console.error('Error searching books:', error);

@@ -9,7 +9,7 @@ const SearchBar = ({ onSearch }) => {
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      e.preventDefault(); // Prevent form submission
+      e.preventDefault(); 
       onSearch(query);
     }
   };
