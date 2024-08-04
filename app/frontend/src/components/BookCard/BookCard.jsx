@@ -13,8 +13,12 @@ const BookCard = ({ book }) => {
             <div className="card-header">
               <h2 className="book-title">{book.title}</h2>
               <div className="card-details">
-                {/* Handle authors as a comma-separated string */}
-                <span className="author">{Array.isArray(book.authors) ? book.authors.join(", ") : book.authors}</span>
+                {/* Check if authors is an array and map through it to display names */}
+                <span className="author">
+                  {Array.isArray(book.authors) 
+                    ? book.authors.map(author => typeof author === 'object' ? author.name : author).join(", ")
+                    : book.authors}
+                </span>
                 <span className="year">{book.published_year}</span>
               </div>
               <div className="favorite-icon">
@@ -36,7 +40,6 @@ const BookCard = ({ book }) => {
               </div>
             </div>
           </div>
-          {/* Add this section for the book description */}
           <div className="book-description">
             <p>{book.description || "No description available"}</p>
           </div>
@@ -45,6 +48,7 @@ const BookCard = ({ book }) => {
     </div>
   );
 };
+
 
 BookCard.propTypes = {
   book: PropTypes.shape({
