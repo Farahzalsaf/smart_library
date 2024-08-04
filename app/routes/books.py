@@ -12,18 +12,7 @@ router = APIRouter()
 
 @router.get("/books", response_model=List[BookSchema], tags=["Books"], operation_id="get_books_list")
 def get_books_route(db: Session = Depends(get_db)):
-    books = get_books(db)
-    formatted_books = [
-        {
-            "id": book.book_id,
-            "title": book.title,
-            "authors": [author.name for author in book.authors],
-            "thumbnail": book.thumbnail,
-            "description": book.description,
-        }
-        for book in books
-    ]
-    return formatted_books
+    return get_books(db)
 
 @router.get("/books/{book_id}", response_model=BookSchema, tags=["Books"], operation_id="get_book_by_id")
 def get_book_route(book_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
@@ -63,9 +52,9 @@ def get_recommended_books_route(db: Session = Depends(get_db), current_user: dic
         raise HTTPException(status_code=404, detail=str(e))
 
 @router.get("/books/search/similarity/{user_query}")
-def get_book_similarity(user_query: str, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
+def get_book_similarity(user_query: str, db: Session = Depends(get_db)): #current_user: dict = Depends(get_current_user)):
     similarity_text_result = similarity_text(user_query)
     if not similarity_text_result:
         raise HTTPException(status_code=404, detail="No similar books found.")
-    log_user_activity(db, current_user['username'], f"Searched for book with query: {user_query}")
+    #log_user_activity(db, current_user['username'], f"Searched for book with query: {user_query}")
     return {"results": similarity_text_result}

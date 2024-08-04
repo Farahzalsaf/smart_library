@@ -1,216 +1,337 @@
-.page-title {
-  text-align: center;
-  margin: 20px 0;
-  font-size: 24px;
+/* General Styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #19191B;
+  color: #FFFFFF;
+  overflow-y: hidden;
 }
 
+/* Page Title */
+.page-title {
+  text-align: left;
+  margin: 40px 0;
+  font-size: 24px;
+  margin-left: 40px;
+}
+
+.page-title {
+  font-size: 24px;
+  color: #ffffff;
+}
+
+.header-left {
+  position: absolute;
+  right: 20px; /* Adjust as necessary */
+  top: 20px;
+}
+
+/* Title Button Styling */
+.title-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.title-button svg {
+  width: 24px;
+  height: 24px;
+}
+
+.title-button:hover svg {
+  fill: #1b9c9c; /* Optional: Change color on hover */
+}
+
+/* Search Bar Container */
 .search-bar-container {
   display: flex;
-  justify-content: center;
-  background-color: #f0f0f0;
-  padding: 20px 0;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: #172242;
+  padding: 10px 0;
   margin-bottom: 20px;
+  margin-left: 80px;
+  margin-right: 80px;
+  border-radius: 14px;
+  overflow: visible;
+  position: relative;
+  z-index: 2;
 }
 
+/* Search Bar */
 .search-bar {
   display: flex;
-  justify-content: center;
-  width: 50%;
+  align-items: center;
+  width: 60%;
   position: relative;
 }
 
 .search-bar input {
-  width: 80%;
+  flex-grow: 1;
   padding: 10px;
   font-size: 16px;
   border-radius: 14px;
-  z-index: 1111;
-  overflow: hidden;
-  box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
-  background-color: #fff;
+  box-shadow: none;
+  background-color: #445A9A;
+  color: #FFFFFF;
   border: none;
-  position: relative;
-  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.search-bar input::placeholder {
+  color: #bbb;
 }
 
 .search-bar input:focus {
-  transform: translateY(-5px);
-  box-shadow: 20px 20px 60px #adadad, -20px -20px 60px #ffffff;
+  outline: none;
+}
+
+.dropdown-container {
+  margin-left: 10px;
+  flex-shrink: 0;
+}
+
+.dropdown-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-button svg {
+  fill: #FFFFFF;
 }
 
 .button {
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 200px;
-  height: 50px;
-  border-radius: 14px;
-  z-index: 1111;
-  overflow: hidden;
-  cursor: pointer;
-  box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background-color: #fff;
+  background-color: transparent;
   border: none;
-  position: relative;
-  font-size: 19px;
-  color: black;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 10px;
+  flex-shrink: 0;
+}
+
+.button svg {
+  fill: #FFFFFF;
+  width: 24px;
+  height: 24px;
 }
 
 .button:hover {
   transform: translateY(-5px);
-  box-shadow: 20px 20px 60px #adadad, -20px -20px 60px #ffffff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.button .bg {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  width: calc(100% - 10px);
-  height: calc(100% - 10px);
-  z-index: 0;
-  background: rgba(255, 255, 255, .95);
-  backdrop-filter: blur(24px);
-  border-radius: 10px;
-  overflow: hidden;
-  outline: 2px solid white;
+/* Heart Button */
+.heart-button-container {
+  margin-left: 10px;
+  text-align: right;
+  flex-shrink: 0;
 }
 
-.button .blob {
-  position: absolute;
-  z-index: -1;
-  top: 50%;
-  left: 50%;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background-color: #ff0000;
-  opacity: 1;
-  filter: blur(12px);
-  animation: blob-bounce 5s infinite ease;
-  transform: translate(-50%, -50%);
+.heart-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
+
+/* Book Grid */
 .book-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  overflow-y: scroll;
-  height: 70vh;
+  overflow-y: auto;
+  height: calc(100vh - 160px);
+  padding: 0 20px;
 }
 
+/* Book Item */
 .book-item {
   margin: 10px;
-  text-align: center;
 }
 
+/* Card Styles */
 .card {
   position: relative;
   width: 200px;
-  height: 250px;
-  border-radius: 14px;
-  z-index: 1111;
-  overflow: hidden;
+  height: 300px;
+  background-color: #172242;
+  border-radius: 10px;
+  padding: 15px;
+  overflow: visible;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+  text-align: left;
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .card:hover {
-  transform: translateY(-10px);
-  box-shadow: 10px 10px 40px #adadad, -10px -10px 40px #ffffff;
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-.bg {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  width: 190px;
-  height: 240px;
-  z-index: 2;
-  background: rgba(255, 255, 255, .95);
-  backdrop-filter: blur(24px);
-  border-radius: 10px;
-  overflow: hidden;
-  outline: 2px solid white;
+.card-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
 }
 
-.blob {
+.book-title {
+  font-size: 12px;
+  font-weight: 600;
+  width: 70%;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.card-details {
+  font-size: 14px;
+  color: #bbbbbb;
+  margin: 5px 0 0;
+}
+
+.card-details .author,
+.card-details .year {
+  display: block;
+  font-size: 10px
+}
+.book-description {
   position: absolute;
-  z-index: 1;
-  top: 50%;
-  left: 50%;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background-color: #ff0000;
+  bottom: 10px;
+  left: 10px;
+  width: calc(100% - 20px);
+  height: 75.5%;
+  background: #445A9A;
+  color: white;
+  padding: 10px;
+  font-size: 80%;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  overflow-y: auto; 
+  box-sizing: border-box;
+  border-radius: 8px;
+  text-align: left;
+  text-transform: lowercase;
+}
+
+.book-item:hover .book-description {
   opacity: 1;
-  filter: blur(12px);
-  animation: blob-bounce 5s infinite ease;
 }
 
-.book-cover {
-  z-index: 2;
+.favorite-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
 }
 
-.heading {
-  z-index: 2;
-  font-size: 16px;
-  text-transform: capitalize;
-  font-weight: 300;
+.card-image {
+  margin: 15px 0;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #445A9A;
+  border-radius: 10px;
 }
 
-.loader {
-  text-align: center;
-  font-size: 24px;
-  margin-top: 20px;
+.card-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-size: 10px;
+  color: #FFFFFF;
+}
 
-.spinner {
-  width: 3em;
-  height: 3em;
-  cursor: not-allowed;
+.genre {
+  font-size: 10px;
+  color: #bbbbbb;
+  margin-bottom: 2%;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+}
+
+.rating svg {
+  fill: #FFE45A;
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+}
+
+.rating span {
+  font-size: 10px;
+  color: #FFFFFF;
+}
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #172242;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #D9D9D9;
   border-radius: 50%;
-  border: 2px solid #444;
-  box-shadow: -10px -10px 10px #6359f8, 0px -10px 10px 0px #9c32e2, 10px -10px 10px #f36896, 10px 0 10px #ff0b0b, 10px 10px 10px 0px #ff5500, 0 10px 10px 0px #ff9500, -10px 10px 10px 0px #ffb700;
-  animation: rot55 0.7s linear infinite;
-  position: center;
+  margin: 2px 0;
 }
 
-.spinnerin {
-  border: 2px solid #444;
-  width: 1.5em;
-  height: 1.5em;
-  border-radius: 50%;
-  position: center;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+::-webkit-scrollbar-thumb:hover {
+  background-color: #445A9A;
 }
 
-@keyframes rot55 {
-  to {
-    transform: rotate(360deg);
-  }
+.scrollbar-container {
+  position: absolute;
+  top: 167px;
+  right: 0;
+  height: calc(100vh - 167px);
+  width: 12px;
+  z-index: 1;
 }
 
+.scrollbar {
+  width: 12px;
+  height: 100%;
+  background: #172242;
+}
 
-@keyframes blob-bounce {
-  0% {
-    transform: translate(-100%, -100%) translate3d(0, 0, 0);
-  }
-  25% {
-    transform: translate(-100%, -100%) translate3d(100%, 0, 0);
-  }
-  50% {
-    transform: translate(-100%, -100%) translate3d(100%, 100%, 0);
-  }
-  75% {
-    transform: translate(-100%, -100%) translate3d(0, 100%, 0);
-  }
-  100% {
-    transform: translate(-100%, -100%) translate3d(0, 0, 0);
-  }
+/* Custom Scrollbar for .book-description */
+.book-description::-webkit-scrollbar {
+  width: 8px;
+}
+
+.book-description::-webkit-scrollbar-track {
+  background: #172242;
+}
+
+.book-description::-webkit-scrollbar-thumb {
+  background-color: #D9D9D9;
+  border-radius: 10px;
+  margin: 2px;
+}
+
+.book-description::-webkit-scrollbar-thumb:hover {
+  background-color: #bbbbbb;
 }

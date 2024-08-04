@@ -1,91 +1,35 @@
-import contextlib
-import sys
-from langchain_core.prompts import ChatPromptTemplate
+from fastapi import HTTPException
 from langchain_ollama.llms import OllamaLLM
-from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core.chat_history import BaseChatMessageHistory, InMemoryChatMessageHistory
+from langchain_core.prompts import ChatPromptTemplate
 from common.CRUD.add_booksCrud import similarity_text
-from langchain_core.runnables.history import BaseChatMessageHistory
-from langchain_core.messages import BaseMessage
-from langchain_core.pydantic_v1 import BaseModel, Field
-from typing import List
+from sqlalchemy.orm import Session
+import json
+from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core.runnables import RunnablePassthrough
+from common.CRUD.book_crud import create_book
+from langchain_community.chat_message_histories import SQLChatMessageHistory
+from langchain_core.agents import AgentAction, AgentFinish
+from langchain_core.output_parsers import StrOutputParser
 
-
-
-template = """Question: {question}
-
-Answer: Let's think step by step."""
-
-prompt = ChatPromptTemplate.from_messages([
-    ("system", "You are a helpful AI bot named Lucky. You are designed to assist users with book data."),
-    ("system", "Identify the user's intent based on their input—whether they are trying to engage in casual conversation, add a book, get information, or get a summary of a certain book."),
-    ("system", "If the user is engaging in casual conversation, respond appropriately and continue the conversation. Do NOT mention book data unless the user specifically asks for it."),
-    ("system", "If the user is trying to add a book, ask for the title, author, categories, and description of the book, then add it to the database."),
-    ("system", "If the user is trying to get information, retrieve the book data from the database and provide it to the user."),
-    ("system", "If the user is trying to get a summary of a certain book, retrieve the book data from the database and provide the description and the category of the book to the user."),
-    ("system", "Recognize when a user is replying to your response and continue the conversation accordingly."),
-    ("human", "Hello, how are you doing?"),
-    ("ai", "I'm doing well, thanks! How can I assist you with book data today?"),
-    ("human", "{user_input}")
-])
-
-
-model = OllamaLLM(model="llama3.1")
-
-chain = prompt | model
-
-def generate_response(session_id: str, user_input: str):
-    history = get_session_history(session_id)
-    
-    metadatas, documents = similarity_text(user_input)
-    
-    vector_info = "\n".join(
-        [
-            f"Title: {meta['title']}, Author: {meta['authors']}, Categories: {meta['categories']}, Description: {meta['description']}"
-            for sublist in metadatas
-            for meta in sublist
-        ]
-    )
-    prompt_with_vector_info = f"User asked: {user_input}\n\nVector Database Results:\n{vector_info}\n\nAI Answer:"
-    response = chain.invoke({"user_input": prompt_with_vector_info})
-
-    # Add messages to history
-    history.add_messages([
-        HumanMessage(content=user_input),
-        AIMessage(content=response)
-    ])
-
-    return response
-
-
-
-class InMemoryHistory(BaseChatMessageHistory, BaseModel):
-    """In memory implementation of chat message history."""
-
-    messages: List[BaseMessage] = Field(default_factory=list)
-
-    def add_messages(self, messages: List[BaseMessage]) -> None:
-        """Add a list of messages to the store"""
-        self.messages.extend(messages)
-
-    def clear(self) -> None:
-        self.messages = []
-
-store = {}
-
-def get_session_history(session_id: str) -> BaseChatMessageHistory:
-    if session_id not in store:
-        store[session_id] = InMemoryHistory()
-    return store[session_id]
-
-
+def get_session_history(session_id):
+    return SQLChatMessageHistory(session_id, "sqlite:///memory.db")
 
 class Intents:
     ADD_BOOK = "add_book"
     GET_RECOMMENDATIONS = "get_recommendations"
     GET_SUMMARY = "get_summary"
+    INFORMATION = "information"
     UNKNOWN = "unknown"
 
-def detect_intent(query):
+store = {}
+
+def get_session_history(session_id: str) -> BaseChatMessageHistory:
+    if session_id not in store:
+        store[session_id] = InMemoryChatMessageHistory()
+    return store[session_id]
+
+def detect_intent(query: str) -> str:
     query_lower = query.lower()
     if "add book" in query_lower or "new book" in query_lower:
         return Intents.ADD_BOOK
@@ -93,10 +37,84 @@ def detect_intent(query):
         return Intents.GET_RECOMMENDATIONS
     elif "summary" in query_lower or "book summary" in query_lower:
         return Intents.GET_SUMMARY
+    elif "information" in query_lower:
+        return Intents.INFORMATION
     else:
         return Intents.UNKNOWN
 
+def generate_cntxt(system_prompt: str, session_id: str, query: str) -> str:
+    history = get_session_history(session_id)
+    llm = OllamaLLM(model="llama3.1")
+    
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", "You are an AI Library assisntant and your name is lucky, your job is to help the user with their needs whether it is adding a book to the database, getting a summary of a book, getting information about a certain book, you can also chitchat with the user when it is applicable. Do not deviaite subjects from the user's intent. "),
+        ("human", query),
+    ])
+    
+    context = similarity_text(query)
+    
+    rag_chain = (
+        RunnablePassthrough()
+        | (lambda x: {"context": context, "query": query, "system_prompt": system_prompt})
+        | prompt
+        | llm
+        | StrOutputParser()
+    )
+    
+    response = rag_chain.invoke({"query": query})
+    history.add_messages([
+        HumanMessage(content=query),
+        AIMessage(content=response)
+    ])
+    return response if isinstance(response, str) else json.dumps(response)
 
-def detect_intent(query):
-    intent = intent_graph.match(query)
-    return intent if intent else Intents.UNKNOWN
+def generate_response(system_prompt: str, session_id: str, query: str) -> str:
+    history = get_session_history(session_id)
+    llm = OllamaLLM(model="llama3.1")
+    
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", "You are an AI Library assisntant and your name is lucky, your job is to help the user with their needs whether it is adding a book to the database, getting a summary of a book, getting information about a certain book, you can also chitchat with the user when it is applicable. Do not deviaite subjects from the user's intent. "),
+        ("human", query),
+    ])
+    
+    chain = prompt | llm | StrOutputParser()
+    response = chain.invoke({"title": query})
+    history.add_messages([
+        HumanMessage(content=query),
+        AIMessage(content=response)
+    ])
+    return response if isinstance(response, str) else json.dumps(response)
+
+def generate_intent(db: Session, session_id: str, query: str):
+    intent = detect_intent(query)
+    
+    if intent == Intents.ADD_BOOK:
+        add_book_prompt = "Let's add a new book to the database. Please provide the title, author, categories, and a brief description of the book."
+        book_info = generate_response(add_book_prompt, session_id, query)
+        try:
+            book_info = json.loads(book_info)
+        except json.JSONDecodeError:
+            raise HTTPException(status_code=400, detail="Failed to parse book information JSON")
+        
+        result = create_book(db, book_info.get('authors', []), book_info)
+        return AgentAction(action="Add Book", result="The book has been added successfully! Is there anything else I can assist you with?")
+    
+    elif intent == Intents.GET_RECOMMENDATIONS:
+        recommendation_prompt = "Can you tell me your preferred genre or interests? I'll recommend five books based on your preferences."
+        response = generate_cntxt(recommendation_prompt, session_id, query)
+        return AgentAction(action="Recommend Books", result=response)
+    
+    elif intent == Intents.GET_SUMMARY:
+        summary_prompt = "Could you specify the book you're interested in? I'll provide a brief summary of it."
+        response = generate_cntxt(summary_prompt, session_id, query)
+        return AgentAction(action="Provide Summary", result=response)
+
+    elif intent == Intents.INFORMATION:
+        information_prompt = "Please specify the book or author you want information about. I'll provide detailed information based on our database."
+        response = generate_cntxt(information_prompt, session_id, query)
+        return AgentAction(action="Provide Information", result=response)
+
+    else:
+        default_prompt = "I'm not sure how to assist you with that. Can you please provide more details?"
+        response = generate_cntxt(default_prompt, session_id, query)
+        return AgentFinish(return_values={"message": response}, log="Handled default case")

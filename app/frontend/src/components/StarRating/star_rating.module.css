@@ -1,0 +1,26 @@
+.star-rating {
+    display: flex;
+    margin-bottom: 2%;
+  }
+  
+  .star {
+    position: relative;
+    display: inline-block;
+    margin: 0 2px;
+    margin-bottom: 2%;
+  }
+  
+  .star .star-full {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .star .star-full svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  

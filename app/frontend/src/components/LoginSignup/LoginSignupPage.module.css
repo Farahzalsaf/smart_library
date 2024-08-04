@@ -1,0 +1,88 @@
+/* Main container */
+.login-signup-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #19191B;
+    padding: 20px; /* Added padding */
+}
+
+/* Form container */
+.form-container {
+    background-color: #172242;
+    border-radius: 12px;
+    padding: 30px; /* Reduced padding */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    width: 350px; /* Reduced width */
+    max-width: 90%;
+    color: #ffffff;
+}
+
+/* Form headers */
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #FFFFFF;
+    font-size: 20px; /* Reduced font size */
+    font-weight: 500;
+}
+
+/* Label styles */
+.form-container label {
+    display: block;
+    margin-bottom: 5px;
+    color: #bbbbbb;
+    font-size: 14px;
+}
+
+/* Input field styles */
+.form-container input {
+    width: 100%;
+    padding: 8px; /* Reduced padding */
+    margin-bottom: 15px; /* Reduced margin */
+    border-radius: 5px;
+    border: none;
+    background-color: #1F2A44;
+    color: #FFFFFF;
+    font-size: 14px; /* Reduced font size */
+    outline: none;
+}
+
+.form-container input::placeholder {
+    color: #aaaaaa;
+}
+
+/* Button styles */
+.form-container button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #41D0C8;
+    color: #000000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.form-container button:hover {
+    background-color: #36a89e;
+}
+
+/* Divider */
+.divider {
+    border: none;
+    border-top: 1px solid #555555;
+    margin: 20px 0;
+}
+
+/* Password requirements */
+.password-requirements {
+    font-size: 13px; /* Reduced font size */
+    color: #bbbbbb;
+    margin-bottom: 20px;
+    text-align: left;
+    line-height: 1.5;
+}

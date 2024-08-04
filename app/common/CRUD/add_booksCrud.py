@@ -22,10 +22,30 @@ def add_book_to_vectorDB(title, authors, categories, description, thumbnail):
 
 def similarity_text(query_text: str):
     print(f"Querying for text: {query_text}")
-    results = collection.query(
-        query_texts=[query_text],
-        n_results=2,
-        include=['metadatas', 'documents']
-    )
-    print(f"Query results: {results}")
-    return results['metadatas'], results['documents']
+    try:
+        # Example: Convert the query text to embedding if necessary
+        # query_embedding = embed_text(query_text)
+        # print(f"Query embedding: {query_embedding}")
+
+        results = collection.query(
+            query_texts=[query_text],
+            n_results=2,
+            include=['metadatas', 'documents']
+        )
+        print(f"Query results: {results}")
+
+        if 'metadatas' not in results or 'documents' not in results:
+            print("Unexpected result format. Missing keys.")
+            return [], []
+
+        metadatas = results['metadatas']
+        documents = results['documents']
+
+        if not metadatas or not documents:
+            print("No similar documents found.")
+            return [], []
+
+        return metadatas, documents
+    except Exception as e:
+        print(f"An error occurred during the query: {e}")
+        return [], []
