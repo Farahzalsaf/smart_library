@@ -12,6 +12,14 @@ function App() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState('home');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (currentPage === 'home') {
@@ -68,7 +76,11 @@ function App() {
       <header className="header">
         <div className="page-title">Library</div>
         <div className="header-left">
-          <LoginDropdown navigateTo={navigateTo} />
+          <LoginDropdown 
+            navigateTo={navigateTo} 
+            isAuthenticated={isAuthenticated}
+            setAuthenticated={setIsAuthenticated}
+          />
         </div>
       </header>
       <div style={{ height: "0.75px", backgroundColor: "#EAEFF5" }}></div>
@@ -94,7 +106,7 @@ function App() {
           <ChatbotButton />
         </>
       ) : (
-        <LoginSignupPage />
+        <LoginSignupPage setAuthenticated={setIsAuthenticated} />
       )}
     </div>
   );

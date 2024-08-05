@@ -3,7 +3,7 @@ import axios from 'axios';
 import styles from './LoginSignupPage.module.css'; 
 import qs from 'qs';
 
-const LoginSignupPage = () => {
+const LoginSignupPage = ({ setAuthenticated }) => {
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [signupUsername, setSignupUsername] = useState('');
@@ -21,13 +21,24 @@ const LoginSignupPage = () => {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       });
   
-      console.log('Login success:', response.data);
-     
-      localStorage.setItem('token', response.data.access_token);
-      window.location.href = '/home';
+      if (response.status === 200) {
+        console.log('Login success:', response.data);
+        localStorage.setItem('token', response.data.access_token);
+        setAuthenticated(true);
+        setError('');
+        window.location.href = '/home';
+      } else {
+        console.error('Unexpected response:', response);
+        setError('Unexpected response from server.');
+      }
     } catch (error) {
-      console.error('Login error:', error.response?.data);
-      setError('Invalid credentials');
+      if (error.response && error.response.data) {
+        console.error('Login error:', error.response.data);
+        setError(error.response.data.detail || 'Invalid credentials');
+      } else {
+        console.error('Login error:', error.message);
+        setError('An unexpected error occurred. Please try again later.');
+      }
     }
   };
   
@@ -39,12 +50,24 @@ const LoginSignupPage = () => {
       };
   
       const response = await axios.post('http://localhost:8000/users/register', data);
-  
-      console.log('Signup success:', response.data);
-      window.location.href = '/home'; // Redirect to the home page
+
+      if (response.status === 200) {
+        console.log('Signup success:', response.data);
+        setError('');
+        setAuthenticated(true);
+        window.location.href = '/home';
+      } else {
+        console.error('Unexpected response:', response);
+        setError('Unexpected response from server.');
+      }
     } catch (error) {
-      console.error('Signup error:', error.response?.data);
-      setError('Error signing up');
+      if (error.response && error.response.data) {
+        console.error('Signup error:', error.response.data);
+        setError(error.response.data.detail || 'Error signing up');
+      } else {
+        console.error('Signup error:', error.message);
+        setError('An unexpected error occurred. Please try again later.');
+      }
     }
   };
   
