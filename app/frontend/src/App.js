@@ -37,8 +37,6 @@ function App() {
     try {
       const data = await searchBooks(query);
       console.log('Nested results:', data.results);
-  
-      
       const books = data.results.flatMap(innerArray => {
         if (Array.isArray(innerArray) && innerArray.length > 0) {
           const booksArray = innerArray[0];
