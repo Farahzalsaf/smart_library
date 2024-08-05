@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import styles from './LoginSignupPage.module.css'; // Import the CSS module
+import styles from './LoginSignupPage.module.css'; 
 import qs from 'qs';
 
 const LoginSignupPage = () => {
@@ -22,9 +22,9 @@ const LoginSignupPage = () => {
       });
   
       console.log('Login success:', response.data);
-      // Store the token and handle successful login
+     
       localStorage.setItem('token', response.data.access_token);
-      window.location.href = '/home'; // Redirect to the home page
+      window.location.href = '/home';
     } catch (error) {
       console.error('Login error:', error.response?.data);
       setError('Invalid credentials');
@@ -41,7 +41,6 @@ const LoginSignupPage = () => {
       const response = await axios.post('http://localhost:8000/users/register', data);
   
       console.log('Signup success:', response.data);
-      // Handle successful signup
       window.location.href = '/home'; // Redirect to the home page
     } catch (error) {
       console.error('Signup error:', error.response?.data);
