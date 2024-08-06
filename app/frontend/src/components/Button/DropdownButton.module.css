@@ -1,5 +1,5 @@
 .dropdownContainer {
-    position: relative; /* Necessary for absolute positioning of dropdownMenu */
+    position: relative; 
     display: inline-block;
     overflow: visible;
   }
@@ -15,18 +15,18 @@
   }
   
   .dropdownButton svg {
-    fill: #FFFFFF; /* Ensure SVG icon is visible */
+    fill: #FFFFFF;
   }
   
   .dropdownMenu {
     position: absolute;
-    top: calc(100% + 5px); /* Position just below the button */
+    top: calc(100% + 5px);
     left: 0;
-    background-color: #172242; /* Dark background color */
-    color: #F7F5FF; /* Text color */
+    background-color: #172242; 
+    color: #F7F5FF; 
     border-radius: 4px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 10000; /* Higher than other elements */
+    z-index: 10000;
     min-width: 200px;
     overflow: visible;
   }
@@ -34,17 +34,17 @@
   .dropdownMenu ul {
     list-style: none;
     margin: 0;
-    padding: 0; /* Remove default padding */
+    padding: 0;
   }
   
   .dropdownMenu li {
-    padding: 10px 16px; /* Adjusted padding for better appearance */
+    padding: 10px 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
   
   .dropdownMenu li:hover {
-    background-color: #575757; /* Hover effect */
+    background-color: #575757;
     translate: translateY(-5px);
   }
 
@@ -54,10 +54,10 @@
     justify-content: center;
     overflow-y: auto;
     overflow: visible;
-    height: calc(100vh - 160px); /* Adjust as per header height */
+    height: calc(100vh - 160px);
     padding: 0 20px;
-    position: relative; /* Ensure proper stacking context */
-    z-index: 1; /* Ensure lower z-index than the dropdown */
+    position: relative; 
+    z-index: 1;
   }
 
   
