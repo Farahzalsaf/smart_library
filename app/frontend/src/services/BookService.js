@@ -1,6 +1,5 @@
-const apiUrl = process.env.REACT_APP_URL; 
 export const fetchBooks = () => {
-  return fetch(`${apiUrl}/books`, {
+  return fetch('http://127.0.0.1:8000/books', {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -22,12 +21,11 @@ export const fetchBooks = () => {
 
 export const searchBooks = async (query) => {
   try {
-    const response = await fetch(`${apiUrl}/books/search/similarity/${query}`, {
+    const response = await fetch(`http://127.0.0.1:8000/books/search/similarity/${query}`, {
       headers: {
         'Content-Type': 'application/json',
       },
     });
-
     console.log('Response:', response); 
 
     if (!response.ok) {
@@ -42,4 +40,3 @@ export const searchBooks = async (query) => {
     throw error;
   }
 };
-

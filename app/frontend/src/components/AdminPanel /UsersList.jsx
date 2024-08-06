@@ -6,12 +6,12 @@ const UsersList = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const apiUrl = process.env.REACT_APP_URL;
+
 
   
   const fetchUsers = useCallback(async () => {
     try {
-      const response = await axios.get(`${apiUrl}/admin/activities`, {
+      const response = await axios.get(`http://localhost:8000/admin/activities`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       console.log('Fetched users:', response.data); 
@@ -22,7 +22,7 @@ const UsersList = () => {
       setError(err.message);
       setLoading(false);
     }
-  }, [apiUrl]); 
+  }, []); 
 
   useEffect(() => {
     fetchUsers();

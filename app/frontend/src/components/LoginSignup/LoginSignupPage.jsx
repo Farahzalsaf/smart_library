@@ -11,7 +11,7 @@ const LoginSignupPage = ({ setAuthenticated }) => {
   const [error, setError] = useState('');
 
 
-  const apiUrl = process.env.REACT_APP_URL;
+
 
   const handleLogin = async () => {
     try {
@@ -20,7 +20,7 @@ const LoginSignupPage = ({ setAuthenticated }) => {
         password: loginPassword,
       });
 
-      const response = await axios.post(`${apiUrl}/users/login`, data, {
+      const response = await axios.post(`http://localhost:8000/users/login`, data, {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       });
 
@@ -53,7 +53,7 @@ const LoginSignupPage = ({ setAuthenticated }) => {
         password: signupPassword,
       };
 
-      const response = await axios.post(`${apiUrl}/users/register`, data);
+      const response = await axios.post(`http://localhost:8000/users/register`, data);
 
       if (response.status === 200) {
         console.log('Signup success:', response.data);

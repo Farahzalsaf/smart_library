@@ -9,35 +9,36 @@ const BooksTable = () => {
   const [newBook, setNewBook] = useState({ title: '', authors: '', publishedYear: '', description: '', rating: '' });
   const [editingBookId, setEditingBookId] = useState(null);
 
-
-  const apiUrl = process.env.REACT_APP_URL;
-
+  const apiClient = axios.create({
+    baseURL: 'http://localhost:8000',
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
 
   const fetchBooks = useCallback(async () => {
     try {
-      const response = await axios.get(`${apiUrl}/books`);
+      const response = await apiClient.get('/books');
       setBooks(response.data);
       setLoading(false);
     } catch (err) {
       setError(err.message);
       setLoading(false);
     }
-  }, [apiUrl]);
+  }, [apiClient]);
 
   useEffect(() => {
     fetchBooks();
   }, [fetchBooks]);
 
-  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewBook({ ...newBook, [name]: value });
   };
 
-
   const addBook = async () => {
     try {
-      await axios.post(`${apiUrl}/books`, newBook);
+      await apiClient.post('/books', newBook);
       fetchBooks();
       setNewBook({ title: '', authors: '', publishedYear: '', description: '', rating: '' });
     } catch (err) {
@@ -45,10 +46,9 @@ const BooksTable = () => {
     }
   };
 
-
   const updateBook = async (bookId) => {
     try {
-      await axios.put(`${apiUrl}/books/${bookId}`, newBook);
+      await apiClient.put(`/books/${bookId}`, newBook);
       fetchBooks();
       setEditingBookId(null);
       setNewBook({ title: '', authors: '', publishedYear: '', description: '', rating: '' });
@@ -57,10 +57,9 @@ const BooksTable = () => {
     }
   };
 
-
   const deleteBook = async (bookId) => {
     try {
-      await axios.delete(`${apiUrl}/books/${bookId}`);
+      await apiClient.delete(`/books/${bookId}`);
       fetchBooks();
     } catch (err) {
       setError(err.message);
