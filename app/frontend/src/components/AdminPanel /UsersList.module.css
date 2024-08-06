@@ -1,0 +1,73 @@
+.users-list {
+    background-color: #111;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .user-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #333;
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .username {
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .user-role {
+    color: #888;
+  }
+  
+  .user-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .user-actions button {
+    background-color: #41D0C8;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .user-actions button:hover {
+    background-color: #37b4ad;
+  }
+  
+  .add-user {
+    margin-top: 20px;
+  }
+  
+  .add-user input {
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #222;
+    color: #fff;
+    margin-right: 10px;
+  }
+  
+  .add-user button {
+    background-color: #41D0C8;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .add-user button:hover {
+    background-color: #37b4ad;
+  }
+  

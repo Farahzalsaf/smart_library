@@ -6,6 +6,7 @@ import { fetchBooks, searchBooks } from './services/BookService.js';
 import LoginDropdown from './components/Button/LoginDropdown.jsx';
 import ChatbotButton from './components/Button/ChatbotButton.jsx';
 import LoginSignupPage from './components/LoginSignup/LoginSignupPage.jsx';
+import AdminPanel from './components/AdminPanel /AdminPanel.jsx';
 import './App.css';
 
 function App() {
@@ -65,7 +66,6 @@ function App() {
       setLoading(false);
     }
   };
-  
 
   const navigateTo = (page) => {
     setCurrentPage(page);
@@ -85,25 +85,31 @@ function App() {
       </header>
       <div style={{ height: "0.75px", backgroundColor: "#EAEFF5" }}></div>
 
-      {currentPage === 'home' ? (
+      {isAuthenticated ? (
         <>
-          <div className="toolbar">
-            <SearchBar onSearch={handleSearch} />
-          </div>
-          {loading ? (
-            <Loader />
+          {currentPage === 'home' ? (
+            <>
+              <div className="toolbar">
+                <SearchBar onSearch={handleSearch} />
+              </div>
+              {loading ? (
+                <Loader />
+              ) : (
+                <div className="book-grid">
+                  {books.length > 0 ? (
+                    books.map((book, index) => (
+                      <BookCard key={index} book={book} />
+                    ))
+                  ) : (
+                    <p>No books found.</p>
+                  )}
+                </div>
+              )}
+              <ChatbotButton />
+            </>
           ) : (
-          <div className="book-grid">
-            {books.length > 0 ? (
-              books.map((book, index) => (
-                <BookCard key={index} book={book} />
-              ))
-            ) : (
-              <p>No books found.</p>
-            )}
-          </div>
+            <AdminPanel />
           )}
-          <ChatbotButton />
         </>
       ) : (
         <LoginSignupPage setAuthenticated={setIsAuthenticated} />

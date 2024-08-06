@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import styles from './LoginSignupPage.module.css'; 
+import styles from './LoginSignupPage.module.css';
 import qs from 'qs';
 
 const LoginSignupPage = ({ setAuthenticated }) => {
@@ -16,17 +16,18 @@ const LoginSignupPage = ({ setAuthenticated }) => {
         username: loginUsername,
         password: loginPassword,
       });
-  
+
       const response = await axios.post('http://localhost:8000/users/login', data, {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       });
-  
+
       if (response.status === 200) {
         console.log('Login success:', response.data);
         localStorage.setItem('token', response.data.access_token);
         setAuthenticated(true);
         setError('');
-        window.location.href = '/home';
+        console.log('Redirecting to /admin...');
+        window.location.href = '/admin'; // Ensure this URL matches your app's route
       } else {
         console.error('Unexpected response:', response);
         setError('Unexpected response from server.');
@@ -41,21 +42,22 @@ const LoginSignupPage = ({ setAuthenticated }) => {
       }
     }
   };
-  
+
   const handleSignup = async () => {
     try {
       const data = {
         username: signupUsername,
         password: signupPassword,
       };
-  
+
       const response = await axios.post('http://localhost:8000/users/register', data);
 
       if (response.status === 200) {
         console.log('Signup success:', response.data);
         setError('');
         setAuthenticated(true);
-        window.location.href = '/home';
+        console.log('Redirecting to /admin...');
+        window.location.href = '/admin'; // Ensure this URL matches your app's route
       } else {
         console.error('Unexpected response:', response);
         setError('Unexpected response from server.');
@@ -70,7 +72,7 @@ const LoginSignupPage = ({ setAuthenticated }) => {
       }
     }
   };
-  
+
   return (
     <div className={styles['login-signup-container']}>
       <div className={styles['form-container']}>

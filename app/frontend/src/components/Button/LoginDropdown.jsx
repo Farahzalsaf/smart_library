@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from './LoginDropdown.module.css';
 
 const LoginDropdown = ({ navigateTo, isAuthenticated, setAuthenticated }) => {
@@ -18,7 +18,6 @@ const LoginDropdown = ({ navigateTo, isAuthenticated, setAuthenticated }) => {
     <div className={styles.dropdownContainer}>
       <button onClick={toggleDropdown} className={styles.dropdownButton}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* SVG Icon for user profile */}
           <mask id="mask0_85_10022" style={{ maskType: 'luminance' }} maskUnits="userSpaceOnUse" x="4" y="14" width="16" height="8">
             <path fillRule="evenodd" clipRule="evenodd" d="M4 14.4961H19.8399V21.8701H4V14.4961Z" fill="white" />
           </mask>

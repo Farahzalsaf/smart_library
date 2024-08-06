@@ -1,0 +1,94 @@
+.admin-panel {
+    background-color: #111;
+    color: #fff;
+    padding: 20px;
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px 0;
+    text-align: center; 
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    width: 100%;
+    max-width: 1200px;
+  }
+  
+  .header h1 {
+    margin: 0;
+  }
+  
+  .content {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 1200px; 
+  }
+  
+  .books-section,
+  .users-section {
+    margin-bottom: 20px;
+  }
+  
+  .books-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .books-table th,
+  .books-table td {
+    border: 1px solid #333;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .users-list {
+    background-color: #222;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  .user-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-email {
+    font-weight: bold;
+  }
+  
+  .user-role {
+    color: #888;
+  }
+  
+  .user-actions button {
+    margin-left: 10px;
+  }
+  
+  .add-user {
+    display: flex;
+    align-items: center;
+  }
+  
+  .add-user input {
+    flex: 1;
+    padding: 5px;
+    margin-right: 10px;
+  }
+  
