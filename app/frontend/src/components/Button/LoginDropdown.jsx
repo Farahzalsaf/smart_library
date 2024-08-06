@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
 import styles from './LoginDropdown.module.css';
 
-const LoginDropdown = ({ navigateTo }) => {
+const LoginDropdown = ({ navigateTo, isAuthenticated, setAuthenticated }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
+  const handleSignOut = () => {
+    localStorage.removeItem('token');
+    setAuthenticated(false);
+    navigateTo('loginSignup');
+  };
+
   return (
     <div className={styles.dropdownContainer}>
       <button onClick={toggleDropdown} className={styles.dropdownButton}>
-        {/* SVG Icon for login */}
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <mask id="mask0_85_10022" style={{ maskType: 'luminance' }} maskUnits="userSpaceOnUse" x="4" y="14" width="16" height="8">
             <path fillRule="evenodd" clipRule="evenodd" d="M4 14.4961H19.8399V21.8701H4V14.4961Z" fill="white" />
@@ -30,8 +35,18 @@ const LoginDropdown = ({ navigateTo }) => {
       {isOpen && (
         <div className={`${styles.dropdownMenu} ${isOpen ? styles.show : ''}`}>
           <ul>
-            <li onClick={() => navigateTo('loginSignup')}>Log In</li>
-            <li onClick={() => navigateTo('loginSignup')}>Sign Up</li>
+            {isAuthenticated ? (
+              <>
+                <li onClick={() => navigateTo('profile')}>Profile</li>
+                <li onClick={() => navigateTo('adminPanel')}>Admin Panel</li>
+                <li onClick={handleSignOut} style={{ color: 'red' }}>Sign Out</li>
+              </>
+            ) : (
+              <>
+                <li onClick={() => navigateTo('loginSignup')}>Log In</li>
+                <li onClick={() => navigateTo('loginSignup')}>Sign Up</li>
+              </>
+            )}
           </ul>
         </div>
       )}
