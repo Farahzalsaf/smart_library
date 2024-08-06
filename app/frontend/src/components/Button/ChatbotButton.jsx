@@ -13,7 +13,7 @@ const ChatbotButton = () => {
   };
 
   const handleSendMessage = async (message) => {
-    const apiUrl = process.env.REACT_APP_URL; // Correctly defining apiUrl
+    const apiUrl = process.env.REACT_APP_URL; 
     if (message.trim() !== '') {
       setMessages((prevMessages) => [
         ...prevMessages,
