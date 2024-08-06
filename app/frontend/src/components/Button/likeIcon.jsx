@@ -10,7 +10,6 @@ const HeartToggle = () => {
   return (
     <div onClick={handleToggle} style={{ cursor: 'pointer' }}>
       {liked ? (
-        // New FilledLikedIcon SVG
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <mask id="mask0_15_8457" style={{ maskType: "luminance" }} maskUnits="userSpaceOnUse" x="2" y="3" width="21" height="20">
             <path fillRule="evenodd" clipRule="evenodd" d="M2 2.99991H22.4725V22.5009H2V2.99991Z" fill="white" />
@@ -22,7 +21,6 @@ const HeartToggle = () => {
           <path fillRule="evenodd" clipRule="evenodd" d="M18.6664 9.92116C18.2794 9.92116 17.9514 9.62416 17.9194 9.23216C17.8534 8.41016 17.3034 7.71616 16.5204 7.46316C16.1254 7.33516 15.9094 6.91216 16.0364 6.51916C16.1654 6.12516 16.5844 5.91116 16.9804 6.03516C18.3434 6.47616 19.2984 7.68316 19.4154 9.11016C19.4484 9.52316 19.1414 9.88516 18.7284 9.91816C18.7074 9.92016 18.6874 9.92116 18.6664 9.92116Z" fill="white" />
         </svg>
       ) : (
-        // LikeIcon
         <div className="like-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <mask id="mask0_18_8791" style={{ maskType: "luminance" }} maskUnits="userSpaceOnUse" x="2" y="3" width="21" height="20">

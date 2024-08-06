@@ -57,7 +57,7 @@ const LoginSignupPage = ({ setAuthenticated }) => {
         setError('');
         setAuthenticated(true);
         console.log('Redirecting to /admin...');
-        window.location.href = '/admin'; // Ensure this URL matches your app's route
+        window.location.href = '/admin'; 
       } else {
         console.error('Unexpected response:', response);
         setError('Unexpected response from server.');

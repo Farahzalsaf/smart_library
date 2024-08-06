@@ -7,7 +7,7 @@ import LoginDropdown from './components/Button/LoginDropdown.jsx';
 import ChatbotButton from './components/Button/ChatbotButton.jsx';
 import LoginSignupPage from './components/LoginSignup/LoginSignupPage.jsx';
 import AdminPanel from './components/AdminPanel /AdminPanel.jsx';
-import './App.css';
+import './App.module.css';
 
 function App() {
   const [books, setBooks] = useState([]);
