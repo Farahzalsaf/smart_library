@@ -13,6 +13,7 @@ const ChatbotButton = () => {
   };
 
   const handleSendMessage = async (message) => {
+    const apiUrl = process.env.REACT_APP_URL; // Correctly defining apiUrl
     if (message.trim() !== '') {
       setMessages((prevMessages) => [
         ...prevMessages,
@@ -21,12 +22,12 @@ const ChatbotButton = () => {
 
       try {
         const payload = {
-          session_id: "1", 
+          session_id: "1",
           query: message
         };
 
         console.log('Sending message to backend:', payload);
-        const response = await axios.post('http://127.0.0.1:8000/chat', payload, {
+        const response = await axios.post(`${apiUrl}/chat`, payload, { 
           headers: {
             'Content-Type': 'application/json',
           }
