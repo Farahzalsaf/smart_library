@@ -7,7 +7,7 @@ import LoginDropdown from './components/Button/LoginDropdown.jsx';
 import ChatbotButton from './components/Button/ChatbotButton.jsx';
 import LoginSignupPage from './components/LoginSignup/LoginSignupPage.jsx';
 import AdminPanel from './components/AdminPanel /AdminPanel.jsx';
-import styles from './App.module.css';
+import './App.css';
 
 function App() {
   const [books, setBooks] = useState([]);
@@ -19,6 +19,9 @@ function App() {
     const token = localStorage.getItem('token');
     if (token) {
       setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+      setCurrentPage('home');
     }
   }, []);
 
@@ -72,10 +75,10 @@ function App() {
   };
 
   return (
-    <div className={styles.App}>
-      <header className={styles.header}>
-        <div className={styles.pageTitle}>Library</div>
-        <div className={styles.headerLeft}>
+    <div className="App">
+      <header className="header">
+        <div className="page-title">Library</div>
+        <div className="header-left">
           <LoginDropdown 
             navigateTo={navigateTo} 
             isAuthenticated={isAuthenticated}
@@ -83,19 +86,19 @@ function App() {
           />
         </div>
       </header>
-      <div className={styles.separator}></div>
+      <div style={{ height: "0.75px", backgroundColor: "#EAEFF5" }}></div>
 
       {isAuthenticated ? (
         <>
           {currentPage === 'home' ? (
             <>
-              <div className={styles.toolbar}>
+              <div className="toolbar">
                 <SearchBar onSearch={handleSearch} />
               </div>
               {loading ? (
                 <Loader />
               ) : (
-                <div className={styles.bookGrid}>
+                <div className="book-grid">
                   {books.length > 0 ? (
                     books.map((book, index) => (
                       <BookCard key={index} book={book} />
@@ -117,6 +120,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;
