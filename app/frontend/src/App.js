@@ -7,7 +7,7 @@ import LoginDropdown from './components/Button/LoginDropdown.jsx';
 import ChatbotButton from './components/Button/ChatbotButton.jsx';
 import LoginSignupPage from './components/LoginSignup/LoginSignupPage.jsx';
 import AdminPanel from './components/AdminPanel /AdminPanel.jsx';
-import './App.module.css';
+import styles from './App.module.css';
 
 function App() {
   const [books, setBooks] = useState([]);
@@ -72,10 +72,10 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header className="header">
-        <div className="page-title">Library</div>
-        <div className="header-left">
+    <div className={styles.App}>
+      <header className={styles.header}>
+        <div className={styles.pageTitle}>Library</div>
+        <div className={styles.headerLeft}>
           <LoginDropdown 
             navigateTo={navigateTo} 
             isAuthenticated={isAuthenticated}
@@ -83,19 +83,19 @@ function App() {
           />
         </div>
       </header>
-      <div style={{ height: "0.75px", backgroundColor: "#EAEFF5" }}></div>
+      <div className={styles.separator}></div>
 
       {isAuthenticated ? (
         <>
           {currentPage === 'home' ? (
             <>
-              <div className="toolbar">
+              <div className={styles.toolbar}>
                 <SearchBar onSearch={handleSearch} />
               </div>
               {loading ? (
                 <Loader />
               ) : (
-                <div className="book-grid">
+                <div className={styles.bookGrid}>
                   {books.length > 0 ? (
                     books.map((book, index) => (
                       <BookCard key={index} book={book} />
@@ -117,5 +117,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;
