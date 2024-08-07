@@ -24,7 +24,7 @@ def get_author_by_name(db: Session, author_name: str) -> Author:
 
 def create_author(db: Session, author: AuthorSchema) -> Author:
     
-    db_author = Author(**author.dict())
+    db_author = Author(**author.model_dump())
     
     try:
         db.add(db_author)

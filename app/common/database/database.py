@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker , declarative_base
 
-# Fetch database URL from environment variables
+
 DATABASE_URL = f"postgresql://falsafwan002:Passw0rd@localhost:5432/smart_library"
 
 

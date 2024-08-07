@@ -31,7 +31,11 @@ def get_book_route(book_id: int, db: Session = Depends(get_db), current_user: di
 @router.post("/books", response_model=BookSchema, tags=["Books"], operation_id="create_book_record")
 def create_book_route(book: BookSchema, db: Session = Depends(get_db), current_user: dict = Depends(admin_required)):
     log_user_activity(db, current_user['username'], "Book creation")
-    return create_book(db, book)
+    if not book.authors:
+        raise HTTPException(status_code=400, detail="Authors must be provided")
+    author_names = [author.name for author in book.authors]
+    created_book = create_book(db, author_names, book)
+    return created_book
 
 @router.put("/books/{book_id}", response_model=BookSchema, tags=["Books"], operation_id="update_book_record")
 def update_book_route(book_id: int, book: BookSchema, db: Session = Depends(get_db), current_user: dict = Depends(admin_required)):

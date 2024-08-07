@@ -5,19 +5,9 @@ export const fetchBooks = () => {
       'Content-Type': 'application/json',
     },
   })
-    .then(async (response) => {
+    .then((response) => {
       if (!response.ok) {
-        const errorText = await response.text();
-        let errorMessage = `Error: ${response.status} ${response.statusText}`;
-        try {
-          const json = JSON.parse(errorText);
-          if (json.message) {
-            errorMessage = json.message;
-          }
-        } catch (e) {
-          errorMessage += ` - ${errorText}`;
-        }
-        throw new Error(errorMessage);
+        throw new Error('Network response was not ok ' + response.statusText);
       }
       return response.json();
     })
@@ -28,7 +18,7 @@ export const fetchBooks = () => {
       return data;
     })
     .catch((error) => {
-      console.error('Error fetching books:', error.message);
+      console.error('Error fetching books:', error);
       throw error;
     });
 };

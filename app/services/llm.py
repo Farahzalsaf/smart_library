@@ -20,6 +20,7 @@ class Intents:
     GET_RECOMMENDATIONS = "get_recommendations"
     GET_SUMMARY = "get_summary"
     INFORMATION = "information"
+    CHITCHAT = "chitchat"
     UNKNOWN = "unknown"
 
 store = {}
@@ -39,6 +40,8 @@ def detect_intent(query: str) -> str:
         return Intents.GET_SUMMARY
     elif "information" in query_lower:
         return Intents.INFORMATION
+    elif "chitchat" in query_lower or "small talk" in query_lower:
+        return Intents.CHITCHAT
     else:
         return Intents.UNKNOWN
 
@@ -113,6 +116,10 @@ def generate_intent(db: Session, session_id: str, query: str):
         information_prompt = "Please specify the book or author you want information about. I'll provide detailed information based on our database."
         response = generate_cntxt(information_prompt, session_id, query)
         return AgentAction(action="Provide Information", result=response)
+    elif intent == Intents.CHITCHAT:
+        chitchat_prompt = "Let's have a chat! What's on your mind today?"
+        response = generate_cntxt(chitchat_prompt, session_id, query)
+        return AgentAction(action="Chitchat", result=response)
 
     else:
         default_prompt = "I'm not sure how to assist you with that. Can you please provide more details?"

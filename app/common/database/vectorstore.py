@@ -9,7 +9,7 @@ class Book(BaseModel):
     description: str
     thumbnail: str
 
-# Initialize the ChromaDB PersistentClient
+
 client = chromadb.PersistentClient(
     path="/Users/falsafwan002/Desktop/smart-library/smart-library/chroma_db", 
     settings=Settings(),
