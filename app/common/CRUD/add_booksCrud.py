@@ -23,10 +23,6 @@ def add_book_to_vectorDB(title, authors, categories, description, thumbnail):
 def similarity_text(query_text: str):
     print(f"Querying for text: {query_text}")
     try:
-        # Example: Convert the query text to embedding if necessary
-        # query_embedding = embed_text(query_text)
-        # print(f"Query embedding: {query_embedding}")
-
         results = collection.query(
             query_texts=[query_text],
             n_results=2,

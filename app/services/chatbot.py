@@ -16,6 +16,8 @@ class Chatbot:
             response = self.handle_get_recommendations(query)
         elif intent == Intents.GET_SUMMARY:
             response = self.handle_get_summary(session_id, query)
+        elif intent == Intents.CHITCHAT:
+            response = self.handle_chitchat(query)
         else:
             system_prompt = "Hi, how can I assist you today?"
             response = generate_response(system_prompt, session_id, query)
@@ -24,7 +26,6 @@ class Chatbot:
 
     def handle_add_book(self, query):
         try:
-            # Example parsing logic
             details = self.parse_book_details(query)
             if not details:
                 return "Invalid book details provided."
@@ -37,7 +38,6 @@ class Chatbot:
             if not title or not authors or not categories or not description:
                 return "Missing book details. Please provide title, authors, categories, and description."
 
-            # Add book to database (assuming a function for this exists)
             add_book_to_vectorDB(title, authors, categories, description)
             return "Book added successfully!"
         except Exception as e:
@@ -67,6 +67,8 @@ class Chatbot:
         similar_items = similarity_text(query)
         return similar_items
 
+    def handle_chitchat(self, query):
+        pass
 
 def handle_get_recommendations(self, query):
     recommendations = self.get_recommendations(query)
@@ -74,7 +76,7 @@ def handle_get_recommendations(self, query):
     filtered_recommendations = [rec for rec in recommendations if self.apply_filters(rec, filters)]
     return {"recommendations": filtered_recommendations}
 
-def parse_filters(self, query):
+def parse_filters(query):
     filters = {}
     parts = query.split(",")
     for part in parts:
@@ -85,7 +87,7 @@ def parse_filters(self, query):
             filters[key] = value
     return filters
 
-def apply_filters(self, rec, filters):
+def apply_filters(rec, filters):
     for key, value in filters.items():
         if rec.get(key) != value:
             return False

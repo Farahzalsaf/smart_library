@@ -7,15 +7,15 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   color: #e0e1dd;
-  max-height: 500px; /* Set a maximum height for the container */
-  overflow-y: auto; /* Allow vertical scrolling if content exceeds container */
+  max-height: 500px;
+  overflow-y: auto;
 }
 
 .add-book-form {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  align-items: center; /* Center items vertically */
+  align-items: center;
   margin-bottom: 20px;
 }
 
@@ -28,7 +28,7 @@
   border-radius: 5px;
   background-color: #1b263b;
   color: #e0e1dd;
-  margin-bottom: 10px; /* Consistent spacing between form elements */
+  margin-bottom: 10px;
 }
 
 .add-book-form button {
@@ -38,7 +38,7 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  align-self: center; /* Align the button with the other form elements */
+  align-self: center;
 }
 
 .add-book-form button:hover {
@@ -48,30 +48,29 @@
 .books-table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed; /* Fixed layout to ensure consistent column widths */
-  background-color: #172242; /* Background color for the entire table */
-  color: #e0e1dd; /* Text color for table content */
+  table-layout: fixed;
+  background-color: #172242;
+  color: #e0e1dd;
 }
 
 .books-table th,
 .books-table td {
   padding: 12px;
   text-align: left;
-  border: 1px solid #415a77; /* Subtle border color */
+  border: 1px solid #415a77;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .books-table th {
-  background-color: #445A9A; /* Set header background color */
-  color: #e0e1dd; /* Text color for header */
-  /* Removed position: sticky; */
+  background-color: #445A9A;
+  color: #e0e1dd;
 }
 
 .books-table td {
-  background-color: #172242; /* Set consistent background color for all rows */
-  color: #e0e1dd; /* Text color for readability */
+  background-color: #172242;
+  color: #e0e1dd;
 }
 
 .books-table .table-actions {

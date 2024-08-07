@@ -19,6 +19,9 @@ function App() {
     const token = localStorage.getItem('token');
     if (token) {
       setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+      setCurrentPage('home');
     }
   }, []);
 

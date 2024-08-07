@@ -10,6 +10,9 @@ const LoginSignupPage = ({ setAuthenticated }) => {
   const [signupPassword, setSignupPassword] = useState('');
   const [error, setError] = useState('');
 
+  const apiUrl = process.env.REACT_APP_URL
+
+
   const handleLogin = async () => {
     try {
       const data = qs.stringify({
@@ -17,9 +20,10 @@ const LoginSignupPage = ({ setAuthenticated }) => {
         password: loginPassword,
       });
 
-      const response = await axios.post('http://localhost:8000/users/login', data, {
+      const response = await axios.post(`${apiUrl}/users/login`, data, {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       });
+      console.log('response', response)
 
       if (response.status === 200) {
         console.log('Login success:', response.data);
@@ -27,7 +31,7 @@ const LoginSignupPage = ({ setAuthenticated }) => {
         setAuthenticated(true);
         setError('');
         console.log('Redirecting to /admin...');
-        window.location.href = '/admin'; // Ensure this URL matches your app's route
+        window.location.href = '/admin'; 
       } else {
         console.error('Unexpected response:', response);
         setError('Unexpected response from server.');
@@ -50,14 +54,14 @@ const LoginSignupPage = ({ setAuthenticated }) => {
         password: signupPassword,
       };
 
-      const response = await axios.post('http://localhost:8000/users/register', data);
+      const response = await axios.post(`${apiUrl}/users/register`, data);
 
       if (response.status === 200) {
         console.log('Signup success:', response.data);
         setError('');
         setAuthenticated(true);
         console.log('Redirecting to /admin...');
-        window.location.href = '/admin'; // Ensure this URL matches your app's route
+        window.location.href = '/admin'; 
       } else {
         console.error('Unexpected response:', response);
         setError('Unexpected response from server.');

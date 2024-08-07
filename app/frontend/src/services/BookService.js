@@ -1,5 +1,6 @@
 export const fetchBooks = () => {
-  return fetch('http://127.0.0.1:8000/books', {
+  const apiUrl = process.env.REACT_APP_URL;
+  return fetch(`${apiUrl}/books`, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -15,13 +16,19 @@ export const fetchBooks = () => {
         throw new Error('Unexpected response format');
       }
       return data;
+    })
+    .catch((error) => {
+      console.error('Error fetching books:', error);
+      throw error;
     });
 };
 
 
+
 export const searchBooks = async (query) => {
+  const apiUrl = process.env.REACT_APP_URL;
   try {
-    const response = await fetch(`http://127.0.0.1:8000/books/search/similarity/${query}`, {
+    const response = await fetch(`${apiUrl}/books/search/similarity/${query}`, {
       headers: {
         'Content-Type': 'application/json',
       },
