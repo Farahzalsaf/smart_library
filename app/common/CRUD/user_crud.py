@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from common.database.models import User
+from common.database.models import User, UserPreference
 from schemas.user import UserSchema
 from middleware.auth import get_password_hash, verify_password
 
@@ -27,3 +27,23 @@ def authenticate_user(db: Session, username: str, password: str) -> User:
     if not user or not verify_password(password, user.password_hash):
         return None
     return user
+
+def update_like_preference(db: Session, username: str, item_id: int, liked: bool):
+    preference = db.query(UserPreference).filter_by(
+        username=username, 
+        preference_type="like", 
+        preference_value=str(item_id)
+    ).first()
+
+    if preference:
+        preference.preference_value = "liked" if liked else "not_liked"
+    else:
+        preference = UserPreference(
+            username=username,
+            preference_type="like",
+            preference_value="liked" if liked else "not_liked"
+        )
+        db.add(preference)
+
+    db.commit()
+    return True
