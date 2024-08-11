@@ -9,7 +9,7 @@ from langchain_core.messages import HumanMessage, AIMessage
 from langchain_core.runnables import RunnablePassthrough
 from common.CRUD.book_crud import create_book
 from langchain_community.chat_message_histories import SQLChatMessageHistory
-from langchain_core.agents import AgentAction, AgentFinish
+from langgraph.graph import Graph
 from langchain_core.output_parsers import StrOutputParser
 
 def get_session_history(session_id):
@@ -89,6 +89,7 @@ def generate_response(system_prompt: str, session_id: str, query: str) -> str:
     return response if isinstance(response, str) else json.dumps(response)
 
 def generate_intent(db: Session, session_id: str, query: str):
+    workflow = Graph()
     intent = detect_intent(query)
     
     if intent == Intents.ADD_BOOK:
@@ -100,28 +101,29 @@ def generate_intent(db: Session, session_id: str, query: str):
             raise HTTPException(status_code=400, detail="Failed to parse book information JSON")
         
         result = create_book(db, book_info.get('authors', []), book_info)
-        return AgentAction(action="Add Book", result="The book has been added successfully! Is there anything else I can assist you with?")
+        return workflow.add_node(action="Add Book", result="The book has been added successfully! Is there anything else I can assist you with?")
     
     elif intent == Intents.GET_RECOMMENDATIONS:
         recommendation_prompt = "Can you tell me your preferred genre or interests? I'll recommend five books based on your preferences."
         response = generate_cntxt(recommendation_prompt, session_id, query)
-        return AgentAction(action="Recommend Books", result=response)
+        return workflow.add_node(action="Recommend Books", result=response)
     
     elif intent == Intents.GET_SUMMARY:
         summary_prompt = "Could you specify the book you're interested in? I'll provide a brief summary of it."
         response = generate_cntxt(summary_prompt, session_id, query)
-        return AgentAction(action="Provide Summary", result=response)
+        return workflow.add_node(action="Provide Summary", result=response)
 
     elif intent == Intents.INFORMATION:
         information_prompt = "Please specify the book or author you want information about. I'll provide detailed information based on our database."
         response = generate_cntxt(information_prompt, session_id, query)
-        return AgentAction(action="Provide Information", result=response)
+        return workflow.add_node(action="Provide Information", result=response)
     elif intent == Intents.CHITCHAT:
         chitchat_prompt = "Let's have a chat! What's on your mind today?"
         response = generate_cntxt(chitchat_prompt, session_id, query)
-        return AgentAction(action="Chitchat", result=response)
+        return workflow.add_node(action="Chitchat", result=response)
 
     else:
         default_prompt = "I'm not sure how to assist you with that. Can you please provide more details?"
         response = generate_cntxt(default_prompt, session_id, query)
-        return AgentFinish(return_values={"message": response}, log="Handled default case")
+        return workflow.add_node(return_values={"message": response}, log="Handled default case")
+    
