@@ -118,6 +118,42 @@ def associate_book_with_author(db: Session, book_title: str, author_name: str):
     except Exception as e:
         db.rollback()
         raise e
-    
+
+def add_favorite_book(db: Session, username: str, book_id: int):
+    existing_favorite = db.query(UserPreference).filter_by(
+        username=username, preference_type="favorite_book", preference_value=str(book_id)
+    ).first()
+
+    if existing_favorite:
+        raise HTTPException(status_code=400, detail="Book already in favorites")
+    new_favorite = UserPreference(
+        username=username,
+        preference_type="favorite_book",
+        preference_value=str(book_id)
+    )
+    db.add(new_favorite)
+    db.commit()
+    db.refresh(new_favorite)
+    return new_favorite
+
+def remove_favorite_book(db: Session, username: str, book_id: int):
+    favorite_to_delete = db.query(UserPreference).filter_by(
+        username=username, preference_type="favorite_book", preference_value=str(book_id)
+    ).first()
+
+    if not favorite_to_delete:
+        raise HTTPException(status_code=400, detail="Book not in favorites")
+
+    db.delete(favorite_to_delete)
+    db.commit()
+    return {"message": "Book removed from favorites"}
+
+def get_favorite_books(db: Session, username: str):
+    favorite_book_ids = db.query(UserPreference.preference_value).filter_by(
+        username=username, preference_type="favorite_book"
+    ).all()
+    books = db.query(Book).filter(Book.book_id.in_([int(book_id[0]) for book_id in favorite_book_ids])).all()
+    return books
+
 class Config:
         from_attirbutes = True

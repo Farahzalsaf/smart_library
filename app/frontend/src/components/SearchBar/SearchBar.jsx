@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import DropdownButton from '../Button/DropdownButton';
 import HeartButton from '../Button/HeartIcon';
 
-
-const SearchBar = ({ onSearch }) => {
+const SearchBar = ({ onSearch, navigateTo }) => {
   const [query, setQuery] = useState('');
 
   const handleKeyDown = (e) => {
@@ -13,7 +12,7 @@ const SearchBar = ({ onSearch }) => {
       onSearch(query);
     }
   };
-
+  
   return (
     <div className="search-bar-container">
       <div className="search-bar">
@@ -44,7 +43,7 @@ const SearchBar = ({ onSearch }) => {
           <DropdownButton />
         </div>
         <div className="heart-button-container">
-          <HeartButton />
+          <HeartButton navigateTo={navigateTo} /> 
         </div>
       </div>
     </div>
@@ -53,6 +52,7 @@ const SearchBar = ({ onSearch }) => {
 
 SearchBar.propTypes = {
   onSearch: PropTypes.func.isRequired,
+  navigateTo: PropTypes.func.isRequired,
 };
 
 export default SearchBar;

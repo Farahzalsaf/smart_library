@@ -16,3 +16,8 @@ class UserActivitySchema(BaseModel):
     username: str
     activity: str
     timestamp: datetime
+
+class UserPreferenceSchema(BaseModel):
+    username: str
+    preference_type: str
+    preference_value: str

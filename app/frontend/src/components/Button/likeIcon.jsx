@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const HeartToggle = () => {
-  const [liked, setLiked] = useState(false);
-
+const HeartToggle = ({ isFavorite, toggleFavorite }) => {
   const handleToggle = () => {
-    setLiked(!liked);
+    console.log("HeartToggle clicked, executing toggleFavorite");
+    if (toggleFavorite) {
+      toggleFavorite(); 
+    } else {
+      console.error("toggleFavorite function is not defined.");
+    }
   };
 
   return (
     <div onClick={handleToggle} style={{ cursor: 'pointer' }}>
-      {liked ? (
+      {isFavorite ? (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          {/* SVG for filled heart */}
           <mask id="mask0_15_8457" style={{ maskType: "luminance" }} maskUnits="userSpaceOnUse" x="2" y="3" width="21" height="20">
             <path fillRule="evenodd" clipRule="evenodd" d="M2 2.99991H22.4725V22.5009H2V2.99991Z" fill="white" />
           </mask>
@@ -23,6 +27,7 @@ const HeartToggle = () => {
       ) : (
         <div className="like-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* SVG for outline heart */}
             <mask id="mask0_18_8791" style={{ maskType: "luminance" }} maskUnits="userSpaceOnUse" x="2" y="3" width="21" height="20">
               <path fillRule="evenodd" clipRule="evenodd" d="M2 2.99991H22.4725V22.5009H2V2.99991Z" fill="white" />
             </mask>

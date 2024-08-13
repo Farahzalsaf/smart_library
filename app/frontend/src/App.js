@@ -6,7 +6,9 @@ import { fetchBooks, searchBooks } from './services/BookService.js';
 import LoginDropdown from './components/Button/LoginDropdown.jsx';
 import ChatbotButton from './components/Button/ChatbotButton.jsx';
 import LoginSignupPage from './components/LoginSignup/LoginSignupPage.jsx';
-import AdminPanel from './components/AdminPanel /AdminPanel.jsx';
+import AdminPanel from './components/AdminPanel/AdminPanel.jsx';
+import FavoritesPage from './components/FavoritesPage/FavoritesPage.jsx';
+import { useFavorites } from './components/FavoritesPage/FavoritesContext.jsx';
 import './App.css';
 
 function App() {
@@ -14,7 +16,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState('home');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+  const { favorites, toggleFavorite } = useFavorites();
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -48,7 +50,6 @@ function App() {
     setLoading(true);
     try {
       const data = await searchBooks(query);
-      console.log('Nested results:', data.results);
       const books = data.results.flatMap(innerArray => {
         if (Array.isArray(innerArray) && innerArray.length > 0) {
           const booksArray = innerArray[0];
@@ -59,8 +60,7 @@ function App() {
         }
         return [];
       });
-  
-      console.log('Flattened books:', books);
+
       setBooks(books);
     } catch (error) {
       console.error('Error searching books:', error);
@@ -93,15 +93,20 @@ function App() {
           {currentPage === 'home' ? (
             <>
               <div className="toolbar">
-                <SearchBar onSearch={handleSearch} />
+                <SearchBar onSearch={handleSearch} navigateTo={navigateTo} />
               </div>
               {loading ? (
                 <Loader />
               ) : (
                 <div className="book-grid">
                   {books.length > 0 ? (
-                    books.map((book, index) => (
-                      <BookCard key={index} book={book} />
+                    books.map((book) => (
+                      <BookCard 
+                        key={book.book_id} 
+                        book={book} 
+                        isFavorite={favorites.includes(book.book_id)} 
+                        toggleFavorite={() => toggleFavorite(book.book_id)} 
+                      />
                     ))
                   ) : (
                     <p>No books found.</p>
@@ -110,6 +115,8 @@ function App() {
               )}
               <ChatbotButton />
             </>
+          ) : currentPage === 'favorites' ? (
+            <FavoritesPage books={books} />
           ) : (
             <AdminPanel />
           )}
