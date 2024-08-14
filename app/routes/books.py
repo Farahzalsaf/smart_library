@@ -8,6 +8,7 @@ from middleware.logger import log_user_activity
 from common.CRUD.book_crud import *
 from common.CRUD.add_booksCrud import similarity_text
 from schemas.user import UserPreferenceSchema
+from schemas.book import BookSchema
 
 router = APIRouter()
 
@@ -86,7 +87,7 @@ def add_favorite_book(preference: UserPreferenceSchema, db: Session = Depends(ge
     db.refresh(new_favorite)
     return new_favorite
 
-
+# Remove a book from favorites using UserPreferenceSchema
 @router.delete("/favorites/{book_id}", response_model=UserPreferenceSchema)
 def remove_favorite_book(book_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     username = current_user['username']
@@ -103,7 +104,6 @@ def remove_favorite_book(book_id: int, db: Session = Depends(get_db), current_us
     db.commit()
     return favorite_to_delete
 
-
 @router.get("/favorites", response_model=List[BookSchema])
 def get_favorite_books(db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     username = current_user['username']
@@ -112,4 +112,24 @@ def get_favorite_books(db: Session = Depends(get_db), current_user: dict = Depen
     ).all()
 
     books = db.query(Book).filter(Book.book_id.in_([int(book_id[0]) for book_id in favorite_book_ids])).all()
+    return books
+
+@router.get("/books/sorted/rating_desc", response_model=List[BookSchema], tags=["Books"])
+def retrieve_books_sorted_by_rating_desc(start: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    books = get_books_sorted_by_rating_desc(db, start=start, limit=limit)
+    return books
+
+@router.get("/books/sorted/rating_asc", response_model=List[BookSchema], tags=["Books"])
+def retrieve_books_sorted_by_rating_asc(start: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    books = get_books_sorted_by_rating_asc(db, start=start, limit=limit)
+    return books
+
+@router.get("/books/sorted/year_desc", response_model=List[BookSchema], tags=["Books"])
+def retrieve_books_sorted_by_year_desc(start: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    books = get_books_sorted_by_year_desc(db, start=start, limit=limit)
+    return books
+
+@router.get("/books/sorted/year_asc", response_model=List[BookSchema], tags=["Books"])
+def retrieve_books_sorted_by_year_asc(start: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    books = get_books_sorted_by_year_asc(db, start=start, limit=limit)
     return books

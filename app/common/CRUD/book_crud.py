@@ -120,25 +120,22 @@ def associate_book_with_author(db: Session, book_title: str, author_name: str):
         raise e
 
 def add_favorite_book(db: Session, username: str, book_id: int):
-    existing_favorite = db.query(UserPreference).filter_by(
-        username=username, preference_type="favorite_book", preference_value=str(book_id)
-    ).first()
-
-    if existing_favorite:
-        raise HTTPException(status_code=400, detail="Book already in favorites")
     new_favorite = UserPreference(
         username=username,
-        preference_type="favorite_book",
+        preference_type='favorite_book',
         preference_value=str(book_id)
     )
     db.add(new_favorite)
     db.commit()
     db.refresh(new_favorite)
+    db.expire_all()
     return new_favorite
 
 def remove_favorite_book(db: Session, username: str, book_id: int):
     favorite_to_delete = db.query(UserPreference).filter_by(
-        username=username, preference_type="favorite_book", preference_value=str(book_id)
+        username=username, 
+        preference_type='favorite_book', 
+        preference_value=str(book_id)
     ).first()
 
     if not favorite_to_delete:
@@ -146,6 +143,7 @@ def remove_favorite_book(db: Session, username: str, book_id: int):
 
     db.delete(favorite_to_delete)
     db.commit()
+    db.expire_all() 
     return {"message": "Book removed from favorites"}
 
 def get_favorite_books(db: Session, username: str):
@@ -154,6 +152,27 @@ def get_favorite_books(db: Session, username: str):
     ).all()
     books = db.query(Book).filter(Book.book_id.in_([int(book_id[0]) for book_id in favorite_book_ids])).all()
     return books
+
+def get_books_sorted_by_rating_desc(db: Session, start: int = 0, limit: int = 100):
+    start = abs(start)
+    limit = min(max(limit, 1), 100)
+    return db.query(Book).order_by(Book.average_rating.desc()).offset(start).limit(limit).all()
+
+def get_books_sorted_by_rating_asc(db: Session, start: int = 0, limit: int = 100):
+    start = abs(start)
+    limit = min(max(limit, 1), 100)
+    return db.query(Book).order_by(Book.average_rating.asc()).offset(start).limit(limit).all()
+
+def get_books_sorted_by_year_desc(db: Session, start: int = 0, limit: int = 100):
+    start = abs(start)
+    limit = min(max(limit, 1), 100)
+    return db.query(Book).order_by(Book.published_year.desc()).offset(start).limit(limit).all()
+
+def get_books_sorted_by_year_asc(db: Session, start: int = 0, limit: int = 100):
+    start = abs(start)
+    limit = min(max(limit, 1), 100)
+    return db.query(Book).order_by(Book.published_year.asc()).offset(start).limit(limit).all()
+
 
 class Config:
         from_attirbutes = True

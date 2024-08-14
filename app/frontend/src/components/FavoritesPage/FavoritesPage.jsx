@@ -10,6 +10,7 @@ const FavoritesPage = ({ books }) => {
     const fetchFavorites = async () => {
       try {
         const token = localStorage.getItem('token');
+
         const response = await fetch(`${apiUrl}/favorites`, {
           method: 'GET',
           headers: {
@@ -44,9 +45,13 @@ const FavoritesPage = ({ books }) => {
 
   const favoriteBooks = flattenedBooks.filter(book => favorites.includes(book.book_id));
 
-  const toggleFavorite = async (bookId) => {
-    const isFavorite = favorites.includes(bookId);
+  const toggleFavorite = async (book_id) => {
+    const isFavorite = favorites.includes(book_id);
     const token = localStorage.getItem('token');
+    const preferenceData = {
+        preference_type: 'favorite_book',
+        preference_value: book_id.toString(),
+    };
 
     try {
       const response = await fetch(`${apiUrl}/favorites`, {
@@ -55,10 +60,7 @@ const FavoritesPage = ({ books }) => {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          preference_type: 'favorite_book',
-          preference_value: String(bookId),
-        }),
+        body: JSON.stringify(preferenceData),
       });
 
       if (!response.ok) {
@@ -69,12 +71,13 @@ const FavoritesPage = ({ books }) => {
       console.log('Response from server:', result);
 
       if (isFavorite) {
-        console.log(`Removing favorite book ID: ${bookId}`);
-        removeFavorite(bookId); // Update local state
+        console.log(`Removing favorite book ID: ${book_id}`);
+        removeFavorite(book_id); 
       } else {
-        console.log(`Adding favorite book ID: ${bookId}`);
-        addFavorite(bookId); // Update local state
+        console.log(`Adding favorite book ID: ${book_id}`);
+        addFavorite(book_id);
       }
+
     } catch (error) {
       console.error(`Error ${isFavorite ? 'removing' : 'adding'} favorite book:`, error);
     }
