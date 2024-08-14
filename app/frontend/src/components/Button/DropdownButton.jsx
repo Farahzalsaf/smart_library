@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import styles from './DropdownButton.module.css';
 
-const apiUrl = process.env.REACT_APP_URL; // Ensure your environment variable is set
-
+const apiUrl = process.env.REACT_APP_URL; 
 const DropdownButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   const token = localStorage.getItem('token');
@@ -20,7 +19,7 @@ const DropdownButton = () => {
         const contentType = response.headers.get("content-type");
         if (!response.ok || !contentType.includes("application/json")) {
             console.error(`HTTP error! Status: ${response.status}`);
-            const text = await response.text(); // Read as text if not JSON
+            const text = await response.text(); 
             console.log('Received:', text);
             throw new Error('Non-JSON response received');
         }

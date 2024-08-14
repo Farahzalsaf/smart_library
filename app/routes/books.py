@@ -87,7 +87,6 @@ def add_favorite_book(preference: UserPreferenceSchema, db: Session = Depends(ge
     db.refresh(new_favorite)
     return new_favorite
 
-# Remove a book from favorites using UserPreferenceSchema
 @router.delete("/favorites/{book_id}", response_model=UserPreferenceSchema)
 def remove_favorite_book(book_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     username = current_user['username']
