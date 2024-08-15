@@ -17,6 +17,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { favorites, toggleFavorite } = useFavorites();
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -50,24 +51,18 @@ function App() {
     setLoading(true);
     try {
       const data = await searchBooks(query);
-      const books = data.results.flatMap(innerArray => {
-        if (Array.isArray(innerArray) && innerArray.length > 0) {
-          const booksArray = innerArray[0];
-          return Array.isArray(booksArray) ? booksArray.filter(item => typeof item === 'object' && item !== null).map(book => ({
-            ...book,
-            authors: Array.isArray(book.authors) ? book.authors : book.authors.split(',').map(author => author.trim())
-          })) : [];
-        }
-        return [];
-      });
-
-      setBooks(books);
+      setBooks(data);
     } catch (error) {
       console.error('Error searching books:', error);
       setBooks([]);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSortSelection = (sortedBooks) => {
+    setBooks(sortedBooks);
+    setLoading(false);
   };
 
   const navigateTo = (page) => {
@@ -79,41 +74,32 @@ function App() {
       <header className="header">
         <div className="page-title">Library</div>
         <div className="header-left">
-          <LoginDropdown 
-            navigateTo={navigateTo} 
-            isAuthenticated={isAuthenticated}
-            setAuthenticated={setIsAuthenticated}
-          />
+          <LoginDropdown navigateTo={navigateTo} isAuthenticated={isAuthenticated} setAuthenticated={setIsAuthenticated} />
         </div>
       </header>
       <div style={{ height: "0.75px", backgroundColor: "#EAEFF5" }}></div>
-
       {isAuthenticated ? (
         <>
           {currentPage === 'home' ? (
             <>
               <div className="toolbar">
-                <SearchBar onSearch={handleSearch} navigateTo={navigateTo} />
-              </div>
-              {loading ? (
-                <Loader />
-              ) : (
-                <div className="book-grid">
-                  {books.length > 0 ? (
-                    books.map((book) => (
+              <SearchBar onSearch={handleSearch} navigateTo={navigateTo} onSelection={handleSortSelection} />
+                {loading ? (
+                  <Loader />
+                ) : (
+                  <div className="book-grid">
+                    {books.map((book) => (
                       <BookCard 
                         key={book.book_id} 
                         book={book} 
                         isFavorite={favorites.includes(book.book_id)} 
-                        toggleFavorite={() => toggleFavorite(book.book_id)} 
+                        toggleFavorite={() => toggleFavorite(book.book_id)}
                       />
-                    ))
-                  ) : (
-                    <p>No books found.</p>
-                  )}
-                </div>
-              )}
-              <ChatbotButton />
+                    ))}
+                  </div>
+                )}
+                <ChatbotButton />
+              </div>
             </>
           ) : currentPage === 'favorites' ? (
             <FavoritesPage books={books} />

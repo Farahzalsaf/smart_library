@@ -1,37 +1,32 @@
 import React, { useState } from 'react';
 import styles from './DropdownButton.module.css';
 
-const apiUrl = process.env.REACT_APP_URL; 
-const DropdownButton = () => {
+const apiUrl = process.env.REACT_APP_URL;
+const DropdownButton = ({ onBooksFetched }) => {
   const [isOpen, setIsOpen] = useState(false);
   const token = localStorage.getItem('token');
+
   const fetchSortedBooks = async (path) => {
     const url = `${apiUrl}${path}`;
-    console.log("Fetching from URL:", url); 
     try {
-        const response = await fetch(`${apiUrl}${path}`,
-           {
+        const response = await fetch(url, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             }
         });
-        const contentType = response.headers.get("content-type");
-        if (!response.ok || !contentType.includes("application/json")) {
-            console.error(`HTTP error! Status: ${response.status}`);
-            const text = await response.text(); 
-            console.log('Received:', text);
-            throw new Error('Non-JSON response received');
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        console.log('Received data:', data);
+        onBooksFetched(data);
     } catch (error) {
         console.error('Error fetching books:', error);
     }
-};
+  };
 
   const handleSelection = (category) => {
-    setIsOpen(false); 
+    setIsOpen(false);
     switch (category) {
       case 'topRated':
         fetchSortedBooks('/books/sorted/rating_desc');
