@@ -8,7 +8,7 @@ const SearchBar = ({ onSearch, navigateTo, onSelection }) => {
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            e.preventDefault();  // Prevent the form from being submitted
+            e.preventDefault();
             onSearch(query);
         }
     };

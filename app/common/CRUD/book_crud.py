@@ -1,4 +1,5 @@
 from fastapi import HTTPException
+from sqlalchemy import func
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy.exc import IntegrityError
 from typing import List
@@ -173,6 +174,17 @@ def get_books_sorted_by_year_asc(db: Session, start: int = 0, limit: int = 100):
     limit = min(max(limit, 1), 100)
     return db.query(Book).order_by(Book.published_year.asc()).offset(start).limit(limit).all()
 
+def get_trending_books(db: Session):
+    one_week_ago = func.now() - func.interval('7 days')
+    trending_books = (
+        db.query(Book)
+        .join(UserPreference, UserPreference.preference_value == Book.book_id)
+        .group_by(Book.book_id)
+        .order_by(func.count(UserPreference.preference_value).desc())
+        .limit(100)
+        .all()
+    )
+    return trending_books
 
 class Config:
         from_attirbutes = True

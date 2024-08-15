@@ -132,3 +132,13 @@ def retrieve_books_sorted_by_year_desc(start: int = 0, limit: int = 100, db: Ses
 def retrieve_books_sorted_by_year_asc(start: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     books = get_books_sorted_by_year_asc(db, start=start, limit=limit)
     return books
+
+@router.get("/books/sorted/trending", response_model=List[BookSchema], tags=["Books"])
+def retrieve_trending_books_route(start: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    books = get_trending_books(db, start=start, limit=limit)
+    return books
+
+@router.get("/books/sorted/recommended", response_model=List[BookSchema], tags=["Recommendations"])
+def retrieve_recommended_books_route(start: int = 0, limit: int = 100, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
+    books = get_recommended_books(db, current_user["username"], start=start, limit=limit)
+    return books

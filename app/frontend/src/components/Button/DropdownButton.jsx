@@ -40,10 +40,16 @@ const DropdownButton = ({ onBooksFetched }) => {
       case 'earliestYear':
         fetchSortedBooks('/books/sorted/year_asc');
         break;
+      case 'trending':
+        fetchSortedBooks('/books/sorted/trending');
+        break;
+      case 'recommended':
+        fetchSortedBooks('/books/sorted/recommended');
+        break;
       default:
         console.log('Category not found:', category);
     }
-  };
+};
 
   return (
     <div className={styles.dropdownContainer}>
@@ -59,9 +65,11 @@ const DropdownButton = ({ onBooksFetched }) => {
         <div className={styles.dropdownMenu}>
           <ul>
             <li onClick={() => handleSelection('topRated')}>Top Rated</li>
-            <li onClick={() => handleSelection('leastRated')}>Least Rated</li>
-            <li onClick={() => handleSelection('mostRecentYear')}>Recently added</li>
+            <li onClick={() => handleSelection('leastRated')}>Lowest Rated</li>
+            <li onClick={() => handleSelection('mostRecentYear')}>Recently Added</li>
             <li onClick={() => handleSelection('earliestYear')}>Oldest Books</li>
+            <li onClick={() => handleSelection('trending')}>Trending</li>
+            <li onClick={() => handleSelection('recommended')}>Recommended</li>
           </ul>
         </div>
       )}
