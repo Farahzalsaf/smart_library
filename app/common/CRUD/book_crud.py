@@ -1,4 +1,5 @@
 from fastapi import HTTPException
+from sqlalchemy import func
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy.exc import IntegrityError
 from typing import List
@@ -118,6 +119,72 @@ def associate_book_with_author(db: Session, book_title: str, author_name: str):
     except Exception as e:
         db.rollback()
         raise e
-    
+
+def add_favorite_book(db: Session, username: str, book_id: int):
+    new_favorite = UserPreference(
+        username=username,
+        preference_type='favorite_book',
+        preference_value=str(book_id)
+    )
+    db.add(new_favorite)
+    db.commit()
+    db.refresh(new_favorite)
+    db.expire_all()
+    return new_favorite
+
+def remove_favorite_book(db: Session, username: str, book_id: int):
+    favorite_to_delete = db.query(UserPreference).filter_by(
+        username=username, 
+        preference_type='favorite_book', 
+        preference_value=str(book_id)
+    ).first()
+
+    if not favorite_to_delete:
+        raise HTTPException(status_code=400, detail="Book not in favorites")
+
+    db.delete(favorite_to_delete)
+    db.commit()
+    db.expire_all() 
+    return {"message": "Book removed from favorites"}
+
+def get_favorite_books(db: Session, username: str):
+    favorite_book_ids = db.query(UserPreference.preference_value).filter_by(
+        username=username, preference_type="favorite_book"
+    ).all()
+    books = db.query(Book).filter(Book.book_id.in_([int(book_id[0]) for book_id in favorite_book_ids])).all()
+    return books
+
+def get_books_sorted_by_rating_desc(db: Session, start: int = 0, limit: int = 100):
+    start = abs(start)
+    limit = min(max(limit, 1), 100)
+    return db.query(Book).order_by(Book.average_rating.desc()).offset(start).limit(limit).all()
+
+def get_books_sorted_by_rating_asc(db: Session, start: int = 0, limit: int = 100):
+    start = abs(start)
+    limit = min(max(limit, 1), 100)
+    return db.query(Book).order_by(Book.average_rating.asc()).offset(start).limit(limit).all()
+
+def get_books_sorted_by_year_desc(db: Session, start: int = 0, limit: int = 100):
+    start = abs(start)
+    limit = min(max(limit, 1), 100)
+    return db.query(Book).order_by(Book.published_year.desc()).offset(start).limit(limit).all()
+
+def get_books_sorted_by_year_asc(db: Session, start: int = 0, limit: int = 100):
+    start = abs(start)
+    limit = min(max(limit, 1), 100)
+    return db.query(Book).order_by(Book.published_year.asc()).offset(start).limit(limit).all()
+
+def get_trending_books(db: Session):
+    one_week_ago = func.now() - func.interval('7 days')
+    trending_books = (
+        db.query(Book)
+        .join(UserPreference, UserPreference.preference_value == Book.book_id)
+        .group_by(Book.book_id)
+        .order_by(func.count(UserPreference.preference_value).desc())
+        .limit(100)
+        .all()
+    )
+    return trending_books
+
 class Config:
         from_attirbutes = True

@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const StarRating = ({ rating }) => {
   const uniqueId = uuidv4();
-  const percentage = Math.max(0.1, (rating / 6) * 100);
+  const percentage = Math.max(0.1, (rating / 6) * 100); // this is only to make the filling more clear :)
 
   return (
     <svg

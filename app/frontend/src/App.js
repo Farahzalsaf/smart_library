@@ -6,7 +6,9 @@ import { fetchBooks, searchBooks } from './services/BookService.js';
 import LoginDropdown from './components/Button/LoginDropdown.jsx';
 import ChatbotButton from './components/Button/ChatbotButton.jsx';
 import LoginSignupPage from './components/LoginSignup/LoginSignupPage.jsx';
-import AdminPanel from './components/AdminPanel /AdminPanel.jsx';
+import AdminPanel from './components/AdminPanel/AdminPanel.jsx';
+import FavoritesPage from './components/FavoritesPage/FavoritesPage.jsx';
+import { useFavorites } from './components/FavoritesPage/FavoritesContext.jsx';
 import './App.css';
 
 function App() {
@@ -14,6 +16,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState('home');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { favorites, toggleFavorite } = useFavorites();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -48,26 +51,18 @@ function App() {
     setLoading(true);
     try {
       const data = await searchBooks(query);
-      console.log('Nested results:', data.results);
-      const books = data.results.flatMap(innerArray => {
-        if (Array.isArray(innerArray) && innerArray.length > 0) {
-          const booksArray = innerArray[0];
-          return Array.isArray(booksArray) ? booksArray.filter(item => typeof item === 'object' && item !== null).map(book => ({
-            ...book,
-            authors: Array.isArray(book.authors) ? book.authors : book.authors.split(',').map(author => author.trim())
-          })) : [];
-        }
-        return [];
-      });
-  
-      console.log('Flattened books:', books);
-      setBooks(books);
+      setBooks(data);
     } catch (error) {
       console.error('Error searching books:', error);
       setBooks([]);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSortSelection = (sortedBooks) => {
+    setBooks(sortedBooks);
+    setLoading(false);
   };
 
   const navigateTo = (page) => {
@@ -79,37 +74,35 @@ function App() {
       <header className="header">
         <div className="page-title">Library</div>
         <div className="header-left">
-          <LoginDropdown 
-            navigateTo={navigateTo} 
-            isAuthenticated={isAuthenticated}
-            setAuthenticated={setIsAuthenticated}
-          />
+          <LoginDropdown navigateTo={navigateTo} isAuthenticated={isAuthenticated} setAuthenticated={setIsAuthenticated} />
         </div>
       </header>
       <div style={{ height: "0.75px", backgroundColor: "#EAEFF5" }}></div>
-
       {isAuthenticated ? (
         <>
           {currentPage === 'home' ? (
             <>
               <div className="toolbar">
-                <SearchBar onSearch={handleSearch} />
+              <SearchBar onSearch={handleSearch} navigateTo={navigateTo} onSelection={handleSortSelection} />
+                {loading ? (
+                  <Loader />
+                ) : (
+                  <div className="book-grid">
+                    {books.map((book) => (
+                      <BookCard 
+                        key={book.book_id} 
+                        book={book} 
+                        isFavorite={favorites.includes(book.book_id)} 
+                        toggleFavorite={() => toggleFavorite(book.book_id)}
+                      />
+                    ))}
+                  </div>
+                )}
+                <ChatbotButton />
               </div>
-              {loading ? (
-                <Loader />
-              ) : (
-                <div className="book-grid">
-                  {books.length > 0 ? (
-                    books.map((book, index) => (
-                      <BookCard key={index} book={book} />
-                    ))
-                  ) : (
-                    <p>No books found.</p>
-                  )}
-                </div>
-              )}
-              <ChatbotButton />
             </>
+          ) : currentPage === 'favorites' ? (
+            <FavoritesPage books={books} />
           ) : (
             <AdminPanel />
           )}
