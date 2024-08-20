@@ -4,7 +4,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from typing import List
-from services import chatbot
+from services import langgraph
 from common.database.database import get_db
 from schemas.user import UserSchema, TokenSchema, UserActivitySchema
 from middleware.auth import create_access_token, get_current_user, admin_required
@@ -12,24 +12,24 @@ from common.CRUD.user_crud import get_user_by_username, create_user, authenticat
 from middleware.logger import log_user_activity
 from common.database.models import UserActivity
 router = APIRouter()
-chatbot=chatbot.Chatbot()
 
-class ChatRequest(BaseModel):
-    session_id: str
-    query: str
 
-class ChatResponse(BaseModel):
-    response: str
+# class ChatRequest(BaseModel):
+#     session_id: str
+#     query: str
+
+# class ChatResponse(BaseModel):
+#     response: str
 
 class LikeUpdateRequest(BaseModel):
     username: str
     item_id: int
     liked: bool
 
-@router.post("/chat", response_model=ChatResponse)
-async def chat(request: ChatRequest):
-    response = chatbot.handle_query(request.session_id, request.query)
-    return ChatResponse(response=response)
+# @router.post("/chat", response_model=ChatResponse)
+# async def chat(request: ChatRequest):
+#     response = langgraph.handle_query(request.session_id, request.query)
+#     return ChatResponse(response=response)
 
     
 @router.post("/users/register", response_model=UserSchema, tags=["Users"])
