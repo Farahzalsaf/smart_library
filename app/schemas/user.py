@@ -21,3 +21,7 @@ class UserPreferenceSchema(BaseModel):
     username: str
     preference_type: str
     preference_value: str
+
+class ChatRequest(BaseModel):
+    query: str
+    session_id: str
